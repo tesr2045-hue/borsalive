@@ -1,0 +1,1 @@
+{"date": "20261006", "TUM": [{"broker": "TEB Yatirim", "value": -5.0, "pct": 0.0, "cost": 65.3}, {"broker": "Midas", "value": 5.0, "pct": 0.0, "cost": 65.3}], "TOPLAM": [{"broker": "Midas", "value": 5.0, "pct": 50.0, "cost": 65.3}, {"broker": "TEB Yatirim", "value": 5.0, "pct": 50.0, "cost": 65.3}], "range": "20261006 - 20261006", "ts": 1791269842.4376395, "empty": false}

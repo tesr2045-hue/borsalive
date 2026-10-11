@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# BIST Analiz ops yardımcıları (v1.30.0 ops) — süreç bulma YALNIZ /proc argv eşleşmesiyle (pgrep -f / pkill -f YOK:
+# başka bir kabuk komutunun metninde geçen "watchdog.sh" yanlış eşleşmesin). Öldürme her zaman açık PID ile.
+APP=/workspace/bist-analiz
+WD_SCRIPT=$APP/watchdog.sh
+KA_SCRIPT=/workspace/ngrok-keepalive.sh
+NGROK_BIN=/workspace/ngrok
+PUBLIC_URL=${PUBLIC_URL:-$(cat /workspace/bist-analiz/ops/public_url.txt 2>/dev/null || echo https://21a1-104-30-180-115.ngrok-free.app)}
+OPS_LOG=$APP/ops/ensure.log
+ops_log() { echo "$(TZ=Europe/Istanbul date '+%F %T') $*" >> "$OPS_LOG"; }
+# script_pids <script-path>: argv = [bash|/bin/bash|/usr/bin/bash] <script-path> ...
+script_pids() {
+  local want=$1 d pid a0 a1
+  for d in /proc/[0-9]*; do
+    pid=${d#/proc/}
+    { IFS= read -r -d '' a0 && IFS= read -r -d '' a1; } 2>/dev/null < "$d/cmdline" || continue
+    case "$a0" in bash|/bin/bash|/usr/bin/bash) ;; *) continue ;; esac
+    [ "$a1" = "$want" ] && echo "$pid"
+  done
+}
+# ngrok_pids: argv = /workspace/ngrok http 8765 ...
+ngrok_pids() {
+  local d pid a0 a1
+  for d in /proc/[0-9]*; do
+    pid=${d#/proc/}
+    { IFS= read -r -d '' a0 && IFS= read -r -d '' a1; } 2>/dev/null < "$d/cmdline" || continue
+    [ "$a0" = "$NGROK_BIN" ] && [ "$a1" = "http" ] && echo "$pid"
+  done
+}
+wd_running() { [ -n "$(script_pids "$WD_SCRIPT")" ]; }
+ka_running() { [ -n "$(script_pids "$KA_SCRIPT")" ]; }
+start_detached() { nohup setsid "$@" >/dev/null 2>&1 < /dev/null 9>&- & }   # 9 = ensure-up kilit fd; çocuklara geçmesin
+# public_check: "ok" | "dead <kod>" (ERR_NGROK_3200 vb.) | "neterr"
+public_check() {
+  local body code
+  body=$(mktemp); code=$(curl -s -m 15 -o "$body" -w '%{http_code}' -H 'ngrok-skip-browser-warning: 1' "$PUBLIC_URL/api/health" 2>/dev/null)
+  local err; err=$(grep -o 'ERR_NGROK_[0-9]*' "$body" 2>/dev/null | head -1); rm -f "$body"
+  if [ "$code" = "200" ] && [ -z "$err" ]; then echo ok
+  elif [ -n "$err" ]; then echo "dead $err"
+  elif [ "$code" = "000" ] || [ -z "$code" ]; then echo neterr
+  else echo "dead http$code"; fi
+}

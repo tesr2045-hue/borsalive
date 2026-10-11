@@ -1,0 +1,2138 @@
+{
+ "version": 1,
+ "app": "1.29.0",
+ "updated": "2026-10-04T22:28:39+03:00",
+ "updated_label": "04.10.2026 22:28",
+ "label": "tek gün, korelasyon",
+ "method": "Tarayıcılar 02.10.2026 Cuma gün sonu (18:10) verisiyle çalıştırıldı; her varyant (hazır ayar × sıralama sütunu × ilk 20) o günün kapanışıyla karşılaştırıldı. Skor = tavan isabeti % + ½ × (+%5 üstü kapanış payı) + 0,2 × medyan gün %. En az 8 hisse; 2 günü olan tarayıcılarda iki günün ortalaması. Tavan kilidini yansıtan sütunlar (aktif satış %, bekleyen alış %, görünen lot vb.) dışlandı. Aynı gün verisi olduğundan bu bir KORELASYONDUR, ileriye dönük getiri vaadi değildir. 'İleri' = 01.10 listesinin 02.10 sonucu (1 gün).",
+ "base": {
+  "20261001": {
+   "n": 631,
+   "tv": 50,
+   "prec": 7.9,
+   "c5": 223,
+   "up": 82.3,
+   "med": 3.75,
+   "day": "20261001"
+  },
+  "20261002": {
+   "n": 631,
+   "tv": 31,
+   "prec": 4.9,
+   "c5": 85,
+   "up": 56.4,
+   "med": 0.53,
+   "day": "20261002"
+  }
+ },
+ "cats": [
+  {
+   "id": "tavan",
+   "t": "Tavan / Momentum",
+   "col": "#22c55e"
+  },
+  {
+   "id": "maliyet",
+   "t": "Maliyet & Baskı",
+   "col": "#d4a64a"
+  },
+  {
+   "id": "akan",
+   "t": "Akan Veri / Hacim",
+   "col": "#38bdf8"
+  },
+  {
+   "id": "kurum",
+   "t": "Kurum / AKD",
+   "col": "#a78bfa"
+  },
+  {
+   "id": "derinlik",
+   "t": "Derinlik & Kademe",
+   "col": "#f59e0b"
+  },
+  {
+   "id": "operasyon",
+   "t": "Operasyon Tespiti",
+   "col": "#ef4444"
+  },
+  {
+   "id": "formasyon",
+   "t": "Formasyonlar",
+   "col": "#e879f9"
+  },
+  {
+   "id": "endeks",
+   "t": "Endeks & Sektör",
+   "col": "#94a3b8"
+  },
+  {
+   "id": "hisse",
+   "t": "Hisse detayında bakılacaklar",
+   "col": "#64748b"
+  }
+ ],
+ "items": [
+  {
+   "id": "k_ciddi",
+   "cat": "tavan",
+   "f": "CİDDİ YÜKSELİŞ / TAVAN ADAYI",
+   "c": "TAVAN ADAYI",
+   "d": "Hazır ayar: TAVAN ADAYI · Senaryo skoruna göre (varsayılan sıra) · tarih: güncel gün",
+   "why": "Üç tarayıcının (POC, Alış Ort., Maliyet↑) tavan adayı koşullarını birlikte sağlayan hisseler; iki günde de en yüksek isabet.",
+   "tgt": {
+    "v": "op",
+    "id": "k_ciddi",
+    "w": "tavan",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 11,
+    "tv": 11,
+    "prec": 100.0,
+    "c5": 11,
+    "up": 100.0,
+    "med": 9.96,
+    "day": "20261002"
+   },
+   "ev2": {
+    "n": 15,
+    "tv": 11,
+    "prec": 73.3,
+    "c5": 15,
+    "up": 100.0,
+    "med": 9.91,
+    "day": "20261001"
+   },
+   "ileri": {
+    "sig": "20261001",
+    "day": "20261002",
+    "n": 15,
+    "tv": 1,
+    "up": 80.0,
+    "med": 2.01
+   },
+   "entr": 1.3
+  },
+  {
+   "id": "k_poc",
+   "cat": "maliyet",
+   "f": "POC Baskısı",
+   "c": "TAVAN ADAYI",
+   "d": "Hazır ayar: TAVAN ADAYI · Senaryo skoruna göre (varsayılan sıra) · tarih: güncel gün",
+   "why": "POC yukarı kayıyor + fiyat POC üstünde + tavana yakın: alıcı yüksek fiyatı kabul ediyor.",
+   "tgt": {
+    "v": "op",
+    "id": "k_poc",
+    "w": "tavan",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 8,
+    "tv": 8,
+    "prec": 100.0,
+    "c5": 8,
+    "up": 100.0,
+    "med": 9.96,
+    "day": "20261002"
+   },
+   "ev2": {
+    "n": 14,
+    "tv": 10,
+    "prec": 71.4,
+    "c5": 14,
+    "up": 100.0,
+    "med": 9.9,
+    "day": "20261001"
+   },
+   "ileri": {
+    "sig": "20261001",
+    "day": "20261002",
+    "n": 14,
+    "tv": 1,
+    "up": 78.6,
+    "med": 1.88
+   },
+   "entr": 0.19
+  },
+  {
+   "id": "k_aort",
+   "cat": "maliyet",
+   "f": "Alış Ortalama Baskısı",
+   "c": "TAVAN ADAYI",
+   "d": "Hazır ayar: TAVAN ADAYI · Senaryo skoruna göre (varsayılan sıra) · tarih: güncel gün",
+   "why": "Fiyat alış ortalamasının üstünde, aktif alış güçlü ve tavana yakın: maliyet yükselten talep.",
+   "tgt": {
+    "v": "op",
+    "id": "k_aort",
+    "w": "tavan",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 11,
+    "tv": 11,
+    "prec": 100.0,
+    "c5": 11,
+    "up": 100.0,
+    "med": 9.96,
+    "day": "20261002"
+   },
+   "ev2": {
+    "n": 15,
+    "tv": 11,
+    "prec": 73.3,
+    "c5": 15,
+    "up": 100.0,
+    "med": 9.91,
+    "day": "20261001"
+   },
+   "ileri": {
+    "sig": "20261001",
+    "day": "20261002",
+    "n": 15,
+    "tv": 1,
+    "up": 80.0,
+    "med": 2.01
+   },
+   "entr": 1.3
+  },
+  {
+   "id": "k_maliyet",
+   "cat": "maliyet",
+   "f": "Maliyet Yükselten Kurumlar",
+   "c": "CİDDİ YÜKSELİŞ · Net lot ↓ · ilk 20",
+   "d": "Hazır ayar: CİDDİ YÜKSELİŞ · Sıralama: Net lot (yüksekten düşüğe) · ilk 20 satır",
+   "why": "CİDDİ YÜKSELİŞ kurum satırları, en büyük net lotlu kurumlar önde: hisseyi taşıyan oyuncu.",
+   "tgt": {
+    "v": "op",
+    "id": "k_maliyet",
+    "w": "ciddi",
+    "sort": "net",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 13,
+    "prec": 65.0,
+    "c5": 19,
+    "up": 100.0,
+    "med": 9.86,
+    "day": "20261002"
+   },
+   "ev2": {
+    "n": 20,
+    "tv": 10,
+    "prec": 50.0,
+    "c5": 16,
+    "up": 100.0,
+    "med": 9.57,
+    "day": "20261001"
+   },
+   "ileri": {
+    "sig": "20261001",
+    "day": "20261002",
+    "n": 20,
+    "tv": 1,
+    "up": 60.0,
+    "med": 0.97
+   }
+  },
+  {
+   "id": "israrcilar",
+   "cat": "kurum",
+   "f": "Israrcılar",
+   "c": "Israr skoru ≥40 · gün ≥+%2",
+   "d": "Israr skoru ≥40 · yumuşak gün tabanı +%2 · TAVAN ≥+%8 rozeti",
+   "why": "Gün boyu aynı yönde ısrarla alan oyuncu, kapanışa doğru fiyatı taşır.",
+   "tgt": {
+    "v": "inline",
+    "api": "/api/scanners/israrcilar?limit=40&min_change=2&min_score=40",
+    "key": "rows"
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "day": "20261002",
+    "n": 8,
+    "tv": 5,
+    "c5": 6,
+    "up": 100.0,
+    "med": 9.41
+   }
+  },
+  {
+   "id": "k_destek",
+   "cat": "derinlik",
+   "f": "Gerçek Destek – Sahte Destek Ayrımı",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Gerçek (emilen, iptal edilmeyen) destek, düşüşte tutulan tahtayı gösterir.",
+   "tgt": {
+    "v": "op",
+    "id": "k_destek",
+    "w": null,
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 9,
+    "prec": 45.0,
+    "c5": 9,
+    "up": 75.0,
+    "med": 3.25,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "akk_trng",
+   "cat": "tavan",
+   "f": "Aktif İşlem Taraması — TAVAN TRENİ (yalnız GÜÇLÜ)",
+   "c": "🚂 TAVAN TRENİ · yalnız GÜÇLÜ",
+   "d": "Ön ayar: TAVAN TRENİ + 'yalnız GÜÇLÜ' kutusu işaretli",
+   "why": "GÜÇLÜ rozetli trenler en sıkı koşulu sağlar; liste kısa, isabet yüksek.",
+   "tgt": {
+    "v": "akk",
+    "tt": true,
+    "ttg": true
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "day": "20261002",
+    "n": 14,
+    "tv": 5,
+    "c5": 9,
+    "up": 100.0,
+    "med": 7.09
+   },
+   "ev2": {
+    "day": "20261001",
+    "n": 17,
+    "tv": 3,
+    "c5": 6,
+    "up": 82.4,
+    "med": 2.69
+   },
+   "ileri": {
+    "day": "20261002",
+    "n": 17,
+    "tv": 0,
+    "c5": 1,
+    "up": 41.2,
+    "med": 0.0,
+    "sig": "20261001"
+   }
+  },
+  {
+   "id": "op_14",
+   "cat": "akan",
+   "f": "Kapanış Seansı Operasyonu",
+   "c": "Payı % ↓ · ilk 20",
+   "d": "Sıralama: Payı % (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Kapanış seansında payı yüksek alım, ertesi gün devamın klasik izi.",
+   "tgt": {
+    "v": "op",
+    "id": "op_14",
+    "sort": "tbs",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 7,
+    "prec": 35.0,
+    "c5": 9,
+    "up": 65.0,
+    "med": 3.31,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_supurme",
+   "cat": "akan",
+   "f": "Kademeli Süpürme Tespiti",
+   "c": "GÜN · Lot ↓ · ilk 20",
+   "d": "Pencere: GÜN · Sıralama: Lot (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Satış kademelerini hızla süpüren büyük lot, tavan yürüyüşünün en erken izidir.",
+   "tgt": {
+    "v": "op",
+    "id": "k_supurme",
+    "w": "gun",
+    "sort": "slot",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 6,
+    "prec": 30.0,
+    "c5": 8,
+    "up": 75.0,
+    "med": 2.23,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_baski",
+   "cat": "maliyet",
+   "f": "Aktif Alış Baskı Endeksi",
+   "c": "GÜN · Fiyat iten alış lot ↓ · ilk 20",
+   "d": "Pencere: GÜN · Sıralama: Fiyat iten alış lot (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Fiyatı yukarı iten aktif alış lotu, gerçek talebi pasif emirden ayırır.",
+   "tgt": {
+    "v": "op",
+    "id": "k_baski",
+    "w": "gun",
+    "sort": "push",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 6,
+    "prec": 30.0,
+    "c5": 7,
+    "up": 55.0,
+    "med": 0.74,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "sinyal",
+   "cat": "akan",
+   "f": "Teknik Sinyaller (tüm hisseler)",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Teknik skor RSI/MACD/VWAP/RVOL ve alış hakimiyetini birleştirir.",
+   "tgt": {
+    "v": "op",
+    "id": "teknik",
+    "sort": "sc",
+    "dir": -1,
+    "filt": ""
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 5,
+    "prec": 25.0,
+    "c5": 14,
+    "up": 100.0,
+    "med": 6.02,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_pozitif",
+   "cat": "akan",
+   "f": "Pozitif Anlık Hareketlilik",
+   "c": "Süpürme ↓ · ilk 20",
+   "d": "Sıralama: Süpürme (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Kısa pencerede süpürme sayısı ivmenin en somut göstergesi.",
+   "tgt": {
+    "v": "op",
+    "id": "k_pozitif",
+    "w": null,
+    "sort": "sw",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 5,
+    "prec": 25.0,
+    "c5": 9,
+    "up": 70.0,
+    "med": 4.05,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "akdt_ilkn",
+   "cat": "kurum",
+   "f": "AKD Taraması — İLK N NET",
+   "c": "İlk 3 güçlü alan (≥%40)",
+   "d": "Mod: TÜM AKD NET (hisse) · İLK 3 NET: güçlü ALAN ≥%40 · hisse net ≥1 Mn ₺ · sıralama İLK 3 % (yüksekten) · ilk 20 satır",
+   "why": "İlk N net alıcının satıcılara üstünlüğü (AKD sekmesi İLK N kartı) tek kurumdan daha sağlam bir birikim ölçüsüdür.",
+   "tgt": {
+    "v": "akdt",
+    "preset": "i3a"
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "day": "20261002",
+    "n": 20,
+    "tv": 4,
+    "c5": 9,
+    "up": 100.0,
+    "med": 4.26
+   },
+   "ev2": {
+    "day": "20261001",
+    "n": 20,
+    "tv": 6,
+    "c5": 14,
+    "up": 100.0,
+    "med": 7.04
+   },
+   "ileri": {
+    "day": "20261002",
+    "n": 20,
+    "tv": 2,
+    "c5": 5,
+    "up": 60.0,
+    "med": 0.75,
+    "sig": "20261001"
+   }
+  },
+  {
+   "id": "op_10",
+   "cat": "tavan",
+   "f": "Tavan Öncesi İmza",
+   "c": "Benzerlik (yüzdelik) ↓ · ilk 20",
+   "d": "Sıralama: Benzerlik (yüzdelik) (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Geçmiş tavanların öncesindeki imzaya en çok benzeyen hisseler.",
+   "tgt": {
+    "v": "op",
+    "id": "op_10",
+    "sort": "sim",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 9,
+    "up": 55.0,
+    "med": 4.02,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_9",
+   "cat": "kurum",
+   "f": "Yabancı / Kurumsal Giriş",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Yabancı/kurumsal giriş skoru yüksek hisseler.",
+   "tgt": {
+    "v": "op",
+    "id": "op_9",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 7,
+    "up": 80.0,
+    "med": 2.94,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_uptick",
+   "cat": "akan",
+   "f": "Seri Uptick (Yeşil Dalga) Süpürmesi",
+   "c": "GÜN · Skor ↓ · ilk 20",
+   "d": "Pencere: GÜN · Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Art arda yukarı işlem (yeşil dalga) alıcı acelesini ölçer.",
+   "tgt": {
+    "v": "op",
+    "id": "k_uptick",
+    "w": "gun",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 7,
+    "up": 70.0,
+    "med": 2.91,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_islem",
+   "cat": "akan",
+   "f": "İşlem Analizi (Tüm Hisseler)",
+   "c": "GÜN · En çok tekrar lot ↓ · ilk 20",
+   "d": "Pencere: GÜN · Sıralama: En çok tekrar lot (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "En çok tekrar eden lot, algoritmik/kararlı alıcı ayak izidir.",
+   "tgt": {
+    "v": "op",
+    "id": "k_islem",
+    "w": "gun",
+    "sort": "tlot",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 6,
+    "up": 85.0,
+    "med": 2.45,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "akdt_kurum",
+   "cat": "kurum",
+   "f": "AKD Taraması — Kurum modu",
+   "c": "Agresif alıcı (aktif alış ≥%70 + net alıcı)",
+   "d": "Mod: TÜM KURUM SATIRLARI · net alıcı · AKTİF ALIŞ ≥%70 · net ≥1 Mn ₺ · sıralama NET ₺ (yüksekten) · ilk 20 satır",
+   "why": "Tek kurumun hisseyi topladığı (yüksek net pay) satırlar tavan zincirinin arkasındaki oyuncuyu gösterir.",
+   "tgt": {
+    "v": "akdt",
+    "preset": "agr"
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "day": "20261002",
+    "n": 20,
+    "tv": 4,
+    "c5": 6,
+    "up": 80.0,
+    "med": 2.08
+   },
+   "ev2": {
+    "day": "20261001",
+    "n": 20,
+    "tv": 3,
+    "c5": 5,
+    "up": 85.0,
+    "med": 2.56
+   },
+   "ileri": {
+    "day": "20261002",
+    "n": 20,
+    "tv": 0,
+    "c5": 2,
+    "up": 35.0,
+    "med": -0.28,
+    "sig": "20261001"
+   }
+  },
+  {
+   "id": "k_serit",
+   "cat": "akan",
+   "f": "Şerit Hızı (Tape Speed) Patlaması",
+   "c": "Hız × ↓ · ilk 20",
+   "d": "Sıralama: Hız × (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Şerit hızı patlaması hacmin hisseye aniden aktığını gösterir.",
+   "tgt": {
+    "v": "op",
+    "id": "k_serit",
+    "w": null,
+    "sort": "oran",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 5,
+    "up": 70.0,
+    "med": 1.96,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_agresiflik",
+   "cat": "akan",
+   "f": "Kurumsal Agresiflik Endeksi (Aggressor Ratio)",
+   "c": "GÜN · Süpürme lot ↓ · ilk 20",
+   "d": "Pencere: GÜN · Sıralama: Süpürme lot (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Süpürülen lot, kurumun piyasa emriyle alım aciliyetini ölçer.",
+   "tgt": {
+    "v": "op",
+    "id": "k_agresiflik",
+    "w": "gun",
+    "sort": "swl",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 6,
+    "up": 65.0,
+    "med": 1.04,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "akdt_net",
+   "cat": "kurum",
+   "f": "AKD Taraması — Hisse NET",
+   "c": "En yüksek net lot (hisse)",
+   "d": "Mod: TÜM AKD NET (hisse) · sıralama: en yüksek NET LOT (ilk 20 hisse) · ilk 20 satır",
+   "why": "Hisse bazında en yüksek net alım, tüm kurumların toplu yönünü verir.",
+   "tgt": {
+    "v": "akdt",
+    "preset": "tnb"
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "day": "20261002",
+    "n": 20,
+    "tv": 4,
+    "c5": 5,
+    "up": 55.0,
+    "med": 0.67
+   },
+   "ev2": {
+    "day": "20261001",
+    "n": 20,
+    "tv": 3,
+    "c5": 9,
+    "up": 75.0,
+    "med": 4.24
+   },
+   "ileri": {
+    "day": "20261002",
+    "n": 20,
+    "tv": 4,
+    "c5": 4,
+    "up": 50.0,
+    "med": 0.26,
+    "sig": "20261001"
+   }
+  },
+  {
+   "id": "k_balina",
+   "cat": "akan",
+   "f": "Balina İmza Algoritması",
+   "c": "GÜN · En sık lot ↓ · ilk 20",
+   "d": "Pencere: GÜN · Sıralama: En sık lot (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Aynı lot imzasıyla tekrar eden büyük alıcı = birikim yapan oyuncu.",
+   "tgt": {
+    "v": "op",
+    "id": "k_balina",
+    "w": "gun",
+    "sort": "lot",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 4,
+    "up": 55.0,
+    "med": 0.56,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_kurumfiyat",
+   "cat": "kurum",
+   "f": "Kurumların En Çok Alım-Satım Fiyat Analizi",
+   "c": "GÜN · Toplam lot ↓ · ilk 20",
+   "d": "Pencere: GÜN · Sıralama: Toplam lot (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "En çok lotun döndüğü fiyat, kurum maliyet seviyesidir.",
+   "tgt": {
+    "v": "op",
+    "id": "k_kurumfiyat",
+    "w": "gun",
+    "sort": "tlot",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 5,
+    "up": 50.0,
+    "med": -0.07,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_29",
+   "cat": "operasyon",
+   "f": "Operasyon Skoru",
+   "c": "Operasyon skoru ↓ · ilk 20",
+   "d": "Sıralama: Operasyon skoru (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Tüm operasyon sinyallerinin 0-100 birleşimi; tek bakışta en çok sinyal toplayan hisseler.",
+   "tgt": {
+    "v": "op",
+    "id": "op_29",
+    "sort": "score",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 4,
+    "prec": 20.0,
+    "c5": 6,
+    "up": 40.0,
+    "med": -1.82,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "akk_trn",
+   "cat": "tavan",
+   "f": "Aktif İşlem Taraması (KURUM) — TAVAN TRENİ",
+   "c": "🚂 TAVAN TRENİ · HİSSE+KURUM görünümü",
+   "d": "Ön ayar: TAVAN TRENİ (hissenin en büyük balinası + net payı ≥%30 + alımının ≥%65'i aktif + ≥5 Mn ₺ aktif alış) · sıralama: tren skoru",
+   "why": "En büyük alıcının agresif (aktif) ve yoğun alımı, tavan treni kalıbının özüdür.",
+   "tgt": {
+    "v": "akk",
+    "tt": true,
+    "ttg": false
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "day": "20261002",
+    "n": 31,
+    "tv": 5,
+    "c5": 13,
+    "up": 90.3,
+    "med": 3.73
+   },
+   "ev2": {
+    "day": "20261001",
+    "n": 31,
+    "tv": 6,
+    "c5": 14,
+    "up": 83.9,
+    "med": 4.4
+   },
+   "ileri": {
+    "day": "20261002",
+    "n": 31,
+    "tv": 1,
+    "c5": 4,
+    "up": 54.8,
+    "med": 0.37,
+    "sig": "20261001"
+   }
+  },
+  {
+   "id": "k_miknatis",
+   "cat": "maliyet",
+   "f": "Fiyat Mıknatısı / İşlem Yoğunluk Bölgesi",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Yoğun işlem bölgesi üstünde kalan fiyat mıknatıs etkisiyle taşınır.",
+   "tgt": {
+    "v": "op",
+    "id": "k_miknatis",
+    "w": null,
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 20,
+    "tv": 3,
+    "prec": 15.0,
+    "c5": 8,
+    "up": 85.0,
+    "med": 4.08,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_11",
+   "cat": "akan",
+   "f": "Düşük Float + Ani Hacim",
+   "c": "20g ort. % ↓ · ilk 20",
+   "d": "Sıralama: 20g ort. % (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Düşük dolaşım + ani hacim tavan yakıtıdır.",
+   "tgt": {
+    "v": "op",
+    "id": "op_11",
+    "sort": "atr",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 3,
+    "prec": 15.0,
+    "c5": 7,
+    "up": 60.0,
+    "med": 0.49,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_12",
+   "cat": "derinlik",
+   "f": "Alış Derinliği Kalınlaşması",
+   "c": "lot ↓ · ilk 20",
+   "d": "Sıralama: lot (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu özellikte tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "op_12",
+    "sort": "wl",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 3,
+    "prec": 15.0,
+    "c5": 3,
+    "up": 45.0,
+    "med": 0.0,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_18",
+   "cat": "derinlik",
+   "f": "Satıcı Tükenmesi",
+   "c": "Aylık net ↓ · ilk 20",
+   "d": "Sıralama: Aylık net (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu özellikte tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "op_18",
+    "sort": "msn",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 2,
+    "prec": 10.0,
+    "c5": 2,
+    "up": 50.0,
+    "med": 0.11,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_gercek",
+   "cat": "tavan",
+   "f": "Gerçek mi Fake mi Yükseliş",
+   "c": "tüm liste",
+   "d": "tüm liste (varsayılan sıra)",
+   "why": "Tüm listeye bakın: gerçek/fake ayrımı kısa listede yapılır.",
+   "tgt": {
+    "v": "op",
+    "id": "k_gercek",
+    "w": null,
+    "sort": null,
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": true,
+   "ev": {
+    "n": 17,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 6,
+    "up": 82.4,
+    "med": 2.81,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_1",
+   "cat": "operasyon",
+   "f": "Sessiz Toplama Dedektörü",
+   "c": "tüm liste",
+   "d": "tüm liste (varsayılan sıra)",
+   "why": "Bu özellikte tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "op_1",
+    "sort": null,
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "n": 9,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 0,
+    "up": 88.9,
+    "med": 2.01,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_3",
+   "cat": "derinlik",
+   "f": "Satış Duvarı Erimesi",
+   "c": "Erime % ↓ · ilk 20",
+   "d": "Sıralama: Erime % (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu özellikte tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "op_3",
+    "sort": "melt",
+    "dir": -1
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 2,
+    "up": 75.0,
+    "med": 1.54,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_koruma",
+   "cat": "derinlik",
+   "f": "Yakın Kademe Koruması",
+   "c": "O kademe lot ↓ · ilk 20",
+   "d": "Sıralama: O kademe lot (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu tarayıcıda tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "k_koruma",
+    "w": null,
+    "sort": "sklot",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 1,
+    "prec": 5.0,
+    "c5": 2,
+    "up": 55.0,
+    "med": 0.59,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_8",
+   "cat": "kurum",
+   "f": "Takas Birikimi Trendi",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Takas birikimi trendi: günler boyu biriken pozisyon (Takas tabanlı ekran).",
+   "tgt": {
+    "v": "op",
+    "id": "op_8",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 1,
+    "prec": 5.0,
+    "c5": 2,
+    "up": 50.0,
+    "med": 0.25,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_22",
+   "cat": "operasyon",
+   "f": "Bilanço / KAP Yakınlığı",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu özellikte tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "op_22",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 1,
+    "prec": 5.0,
+    "c5": 3,
+    "up": 50.0,
+    "med": 0.1,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_vdonus",
+   "cat": "maliyet",
+   "f": "Hacimli V Dönüş Analizi",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu tarayıcıda tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "k_vdonus",
+    "w": null,
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 1,
+    "prec": 5.0,
+    "c5": 1,
+    "up": 30.0,
+    "med": -0.82,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_26",
+   "cat": "operasyon",
+   "f": "Dar Bant Sıkışması",
+   "c": "tüm liste",
+   "d": "tüm liste (varsayılan sıra)",
+   "why": "Bu özellikte tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "op_26",
+    "sort": null,
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 14,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 0,
+    "up": 78.6,
+    "med": 1.23,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_bosluk",
+   "cat": "derinlik",
+   "f": "Satış Kademesi Boşluğu",
+   "c": "Temizleme dk ↓ · ilk 20",
+   "d": "Sıralama: Temizleme dk (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu tarayıcıda tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "k_bosluk",
+    "w": null,
+    "sort": "clr",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 2,
+    "up": 70.0,
+    "med": 1.21,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_kayma",
+   "cat": "akan",
+   "f": "Asimetrik Kayma (Slippage) Fırsatları",
+   "c": "+%3 için ₺ ↓ · ilk 20",
+   "d": "Sıralama: +%3 için ₺ (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu tarayıcıda tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "k_kayma",
+    "w": null,
+    "sort": "u3",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 2,
+    "up": 60.0,
+    "med": 0.84,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_sikisma",
+   "cat": "derinlik",
+   "f": "Sıkışma → Patlama Radarı",
+   "c": "Sıkışma oranı ↓ · ilk 20",
+   "d": "Sıralama: Sıkışma oranı (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu tarayıcıda tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "k_sikisma",
+    "w": null,
+    "sort": "comp",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 2,
+    "up": 60.0,
+    "med": 0.79,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_otoban",
+   "cat": "derinlik",
+   "f": "Otoban Kademe",
+   "c": "tüm liste",
+   "d": "tüm liste (varsayılan sıra)",
+   "why": "Bu tarayıcıda tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "k_otoban",
+    "w": null,
+    "sort": null,
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 56,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 6,
+    "up": 51.8,
+    "med": 0.11,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "hacim",
+   "cat": "akan",
+   "f": "Yüksek Hacimliler",
+   "c": "Hacim ↓ · ilk 20",
+   "d": "Ekran: Yüksek Hacimliler (₺ hacme göre sıralı) · ilk 20 hisse",
+   "why": "Paranın aktığı yer; tavan adayları önce hacim listesine girer.",
+   "tgt": {
+    "v": "movers",
+    "mode": "volume"
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "day": "20261002",
+    "n": 20,
+    "tv": 0,
+    "c5": 0,
+    "up": 50.0,
+    "med": 0.05
+   }
+  },
+  {
+   "id": "k_duvar",
+   "cat": "derinlik",
+   "f": "Satış Duvarı Absorpsiyon Algılama",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu tarayıcıda tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "k_duvar",
+    "w": null,
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 0,
+    "up": 40.0,
+    "med": -0.22,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "k_doldur",
+   "cat": "derinlik",
+   "f": "Doldur-Boşalt Kademe",
+   "c": "Skor ↓ · ilk 20",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Bu tarayıcıda tavan/ciddi yükselişle en uyumlu sıralama (02.10 taraması).",
+   "tgt": {
+    "v": "op",
+    "id": "k_doldur",
+    "w": null,
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 1,
+    "up": 45.0,
+    "med": -0.48,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_27",
+   "cat": "operasyon",
+   "f": "Para Akışı Diverjansı",
+   "c": "Haftalık ilk 5 net alım payı % ↓ · ilk 20",
+   "d": "Sıralama: Haftalık ilk 5 net alım payı % (yüksekten düşüğe) · ilk 20 hisseye bakın",
+   "why": "Diverjans tavan avı değil, uyarı amaçlıdır.",
+   "tgt": {
+    "v": "op",
+    "id": "op_27",
+    "sort": "wtop",
+    "dir": -1
+   },
+   "kind": "zayif",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 0,
+    "prec": 0.0,
+    "c5": 0,
+    "up": 0.0,
+    "med": -9.97,
+    "day": "20261002"
+   }
+  },
+  {
+   "id": "op_28",
+   "cat": "tavan",
+   "f": "Tavan Tutunma Olasılığı",
+   "c": "Kilit gücü ↓",
+   "d": "Sıralama: Kilit gücü (yüksekten düşüğe) · tavandaki tüm hisseler",
+   "why": "Tanım gereği tavandaki hisseler; ertesi gün tutunma olasılığına göre sıralayın.",
+   "tgt": {
+    "v": "op",
+    "id": "op_28",
+    "sort": "lock",
+    "dir": -1
+   },
+   "kind": "tanim",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 20,
+    "prec": 100.0,
+    "c5": 20,
+    "up": 100.0,
+    "med": 9.95,
+    "day": "20261002"
+   },
+   "note": "tanım gereği tavandaki hisseler — aynı gün kanıtı anlamsız; ertesi gün kanıtı Pazartesi birikecek"
+  },
+  {
+   "id": "op_2",
+   "cat": "tavan",
+   "f": "Tavan Kuyruğu Gücü",
+   "c": "Kilit gücü ↓",
+   "d": "Sıralama: Kilit gücü (yüksekten düşüğe) · tavandaki tüm hisseler",
+   "why": "Tanım gereği yalnız tavandaki hisseler; kilit gücü (kuyruk ₺) ertesi gün devamı içindir.",
+   "tgt": {
+    "v": "op",
+    "id": "op_2",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "tanim",
+   "bir": false,
+   "ev": {
+    "n": 20,
+    "tv": 20,
+    "prec": 100.0,
+    "c5": 20,
+    "up": 100.0,
+    "med": 9.93,
+    "day": "20261002"
+   },
+   "note": "tanım gereği tavandaki hisseler — aynı gün kanıtı anlamsız; ertesi gün kanıtı Pazartesi birikecek"
+  },
+  {
+   "id": "op_4",
+   "cat": "akan",
+   "f": "Ardışık Süpürme Serisi",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_4",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_5",
+   "cat": "akan",
+   "f": "Kademe Çizme Hızı",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_5",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_6",
+   "cat": "maliyet",
+   "f": "Tahtacı Maliyet Bandı",
+   "c": "Destek skoru ↓",
+   "d": "Sıralama: Destek skoru (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_6",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_7",
+   "cat": "kurum",
+   "f": "Kurum Konsantrasyonu",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_7",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_13",
+   "cat": "derinlik",
+   "f": "Sahte Emir (Spoofing) Takibi",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_13",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_15",
+   "cat": "akan",
+   "f": "Açılış Seansı Baskısı",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_15",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_16",
+   "cat": "akan",
+   "f": "VWAP Üstü Israr",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_16",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_17",
+   "cat": "kurum",
+   "f": "Kırılım + Kurum Onayı",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_17",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_19",
+   "cat": "kurum",
+   "f": "Çapraz İşlem Ayıklama",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_19",
+    "sort": null,
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_20",
+   "cat": "kurum",
+   "f": "Kurum Ortaklığı Haritası",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_20",
+    "sort": null,
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_21",
+   "cat": "kurum",
+   "f": "Kurumun Geçmiş Başarısı",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_21",
+    "sort": null,
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_23",
+   "cat": "operasyon",
+   "f": "Sektör Rotasyonu",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_23",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_24",
+   "cat": "operasyon",
+   "f": "Rakip Gecikmesi",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_24",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "op_25",
+   "cat": "tavan",
+   "f": "Çok Zaman Dilimli Momentum Uyumu",
+   "c": "Skor ↓",
+   "d": "Sıralama: Skor (yüksekten düşüğe) · ilk 20 hisse",
+   "why": "Ana skor sütunu özelliğin tüm koşullarını tek sayıda toplar.",
+   "tgt": {
+    "v": "op",
+    "id": "op_25",
+    "sort": "sc",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "kademe",
+   "cat": "derinlik",
+   "f": "Kademe Analizi (tüm hisseler)",
+   "c": "NET ALICI · Net % (lot) ↓",
+   "d": "Filtre: NET ALICI · Sıralama: Net % (lot) (yüksekten düşüğe) · ilk 20",
+   "why": "Y38 kademe lotlarında alış tarafı baskın hisseler; 02.10 taramasında hiçbir sıralama baz oranı geçmedi → uzman seçimi.",
+   "tgt": {
+    "v": "op",
+    "id": "kademe",
+    "filt": "alici",
+    "sort": "netp",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "movers",
+   "cat": "tavan",
+   "f": "Yükselenler & Düşenler",
+   "c": "Değişime göre · Yükselenler sütunu",
+   "d": "Ekran: Değişime göre sırala · sol sütun (YÜKSELENLER) · +%5 üstü isimler",
+   "why": "Gün içi en güçlü fiyat hareketi; tavana yürüyenler burada görünür.",
+   "tgt": {
+    "v": "movers",
+    "mode": "change"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "radar",
+   "cat": "tavan",
+   "f": "Piyasa Radarı",
+   "c": "TAVANA YAKIN · Tavana yakınlık",
+   "d": "Çip: TAVANA YAKIN (tavana ≤%3 ve yükselişte) · Sıralama: Tavana yakınlık",
+   "why": "Tavana %3 kala yükselen hisseler kilitlenme adayıdır.",
+   "tgt": {
+    "v": "radar",
+    "k": "ceil",
+    "sort": "ceil"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "tavan",
+   "cat": "tavan",
+   "f": "Tavan / Taban İzleme",
+   "c": "TAVANA YAKIN",
+   "d": "Çip: TAVANA YAKIN (eşik: sunucu ayarı, varsayılan %2) · tavana en yakın + tavan alış lotu en büyük üstte",
+   "why": "Tavana yaklaşan ve tavan kademesinde alış lotu biriken hisseler.",
+   "tgt": {
+    "v": "tavan",
+    "k": "tavan_yakin"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "akis",
+   "cat": "tavan",
+   "f": "Canlı Veri Akışı",
+   "c": "TAVAN/TABAN olayları",
+   "d": "Çip: TAVAN/TABAN · tavana oturan / tavandan çözülen olay akışı",
+   "why": "Tavana kilitlenen hisseler ilk burada olay olarak düşer.",
+   "tgt": {
+    "v": "akis",
+    "kind": "tavantaban"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "akis_hacim",
+   "cat": "akan",
+   "f": "Canlı Veri Akışı — Hacim",
+   "c": "HACİM olayları",
+   "d": "Çip: HACİM · ani hacim patlaması olayları",
+   "why": "Ani hacim patlaması çoğu zaman sert hareketin ilk adımıdır.",
+   "tgt": {
+    "v": "akis",
+    "kind": "hacim"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "agresif",
+   "cat": "akan",
+   "f": "Agresif İzleme",
+   "c": "Yalnız ALIŞ · ≥2 Mn ₺ · ≥3 kademe",
+   "d": "Görünüm filtresi: taraf ALIŞ · min 2.000.000 ₺ · min 3 kademe süpüren · tüm hisseler (bildirim ayarlarınız değişmez)",
+   "why": "Tek emirle çok kademe süpüren büyük alış, tavan yürüyüşünün tetikleyicisidir.",
+   "tgt": {
+    "v": "agresif",
+    "o": {
+     "side": "buy",
+     "min_tl": 2000000,
+     "min_levels": 3,
+     "min_lot": 0,
+     "min_book_pct": 0,
+     "scope": "all"
+    }
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "baski",
+   "cat": "derinlik",
+   "f": "Derinlik Baskısı",
+   "c": "ALIŞ BASKIN · 25K BASKI ↓",
+   "d": "Filtre: ALIŞ BASKIN · Sıralama: 25K BASKI (yüksekten düşüğe)",
+   "why": "25 kademede alış lotu satışı ezen hisseler; derinlik geçmişi Pazartesi başlıyor.",
+   "tgt": {
+    "v": "baski",
+    "f": "buy",
+    "sort": "p25",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "para",
+   "cat": "akan",
+   "f": "Toplu Para Giriş-Çıkışı",
+   "c": "NET GİRİŞ · NET ₺ ↓",
+   "d": "Filtre: NET GİRİŞ · Sıralama: NET ₺ (yüksekten düşüğe)",
+   "why": "Net aktif para girişi en yüksek hisseler.",
+   "tgt": {
+    "v": "para",
+    "f": "in",
+    "sort": "net",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "endeks",
+   "cat": "endeks",
+   "f": "Hisselerin Endekse Etkisi",
+   "c": "XU100 · ARTIRANLAR · Puan ↓",
+   "d": "Endeks: XU100 · Filtre: ARTIRANLAR · Sıralama: Puan katkısı (yüksekten düşüğe)",
+   "why": "Endeksi taşıyan hisseler piyasa liderliğini gösterir.",
+   "tgt": {
+    "v": "endeks",
+    "code": "XU100",
+    "f": "up",
+    "sort": "pts",
+    "dir": -1
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "sektor",
+   "cat": "endeks",
+   "f": "Sektörel Para Akışı",
+   "c": "Net girişi en yüksek sektör",
+   "d": "Ekran: Toplu Para → SEKTÖRLER kartı · net girişi en yüksek sektöre dokunup hisselerine bakın",
+   "why": "Para giren sektörde tavan zinciri olasılığı artar.",
+   "tgt": {
+    "v": "sektor"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "kurum",
+   "cat": "kurum",
+   "f": "Kurum Analizi",
+   "c": "TÜM KURUMLAR · NET ALAN · Alış lot ↓",
+   "d": "Mod: TÜM KURUMLAR · Taraf: NET ALAN · Sıralama: Alış lot (yüksekten düşüğe)",
+   "why": "Günün en büyük net alıcı kurum-hisse eşleşmeleri.",
+   "tgt": {
+    "v": "kurum",
+    "mode": "all",
+    "side": "buy",
+    "sort": "bl",
+    "dir": "desc"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "tahtaci",
+   "cat": "kurum",
+   "f": "Tahtacı Tespiti",
+   "c": "SKORA GÖRE · Çapraz hariç",
+   "d": "Görünüm: SKORA GÖRE · Çapraz işlemler hariç · Sıralama: Tahtacı skoru (yüksekten düşüğe)",
+   "why": "Çapraz işlem gürültüsü ayıklanınca gerçek tahtacı (yön veren kurum) öne çıkar.",
+   "tgt": {
+    "v": "tahtaci",
+    "view": "score",
+    "sort": "score",
+    "dir": -1,
+    "nocross": true
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "kurumuyari",
+   "cat": "kurum",
+   "f": "Kurum Uyarıları",
+   "c": "CANLI UYARILAR",
+   "d": "Sekme: CANLI UYARILAR (eşikler bildirim ayarlarınızdan; değiştirilmez)",
+   "why": "Büyük kurum alımları anında akar; ayarlarınıza dokunulmaz.",
+   "tgt": {
+    "v": "kurumuyari",
+    "tab": "feed"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "gunsonu",
+   "cat": "kurum",
+   "f": "Gün Sonu Raporu",
+   "c": "GÜN SONU RAPORU",
+   "d": "Sekme: GÜN SONU RAPORU · kurumların gün toplamı",
+   "why": "Ertesi gün için kurum pozisyonlarını özetler.",
+   "tgt": {
+    "v": "kurumuyari",
+    "tab": "rapor"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "fm_grafik",
+   "cat": "formasyon",
+   "f": "Grafik Formasyonları",
+   "c": "🚀 Taze yükseliş kırılımları",
+   "d": "Hazır filtre: Taze yükseliş kırılımları (yön ↑ · durum KIRILDI · ≤3 bar taze · kalite ≥60) · Sıralama: Taze kırılım",
+   "why": "Taze ve kaliteli yukarı kırılım, hedefe en çok yol kalan formasyondur.",
+   "tgt": {
+    "v": "fm_grafik",
+    "pre": "taze_up"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "fm_mum",
+   "cat": "formasyon",
+   "f": "Mum Formasyonları",
+   "c": "📊 Hacim teyitli yükseliş",
+   "d": "Hazır filtre: Hacim teyitli yükseliş (yön ↑ · hacim teyidi · güven ≥2) · Sıralama: Skor",
+   "why": "Hacimle teyit edilen yükseliş mumu sahte sinyalleri eler.",
+   "tgt": {
+    "v": "fm_mum",
+    "pre": "hacim_up"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "hacimli_kirilim",
+   "cat": "tavan",
+   "f": "Hacimli Kırılım",
+   "c": "Son kırılım = günün max hacimli kırılımı",
+   "d": "Kural: seans içi gün yükseği kırılımı · son kırılım günün EN HACİMLİ kırılımı · mum yükseliş ve fiyat kırılan seviyenin üstünde · likit evren",
+   "why": "Hacimsiz kırılım çoğu zaman geri döner; en hacimli kırılım gerçek talebi gösterir.",
+   "tgt": {
+    "v": "inline",
+    "api": "/api/alerts/volume-break?limit=40&latest_only=true",
+    "key": "breaks"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "02.10: 5 hisse · 1 tavan · medyan +1.54% — örnek küçük (n<8), kanıt sayılmadı · uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "momentum",
+   "cat": "tavan",
+   "f": "Momentumlu Hızlanış",
+   "c": "5 dk · skor ≥50 · ivme > 0",
+   "d": "Pencere 5 dk · min skor 50 · ivmelenme zorunlu · 3 yeşil mum",
+   "why": "Nadir ani yukarı fırlayış; tavan koşusunun başlangıcı.",
+   "tgt": {
+    "v": "inline",
+    "api": "/api/scanners/momentum?window=5&limit=40&min_score=50",
+    "key": "rows"
+   },
+   "kind": "uzman",
+   "bir": false,
+   "note": "uzman varsayılanı · kanıt canlı seansla birikecek"
+  },
+  {
+   "id": "olay_alarm",
+   "cat": "tavan",
+   "f": "Olay Listesi (ALARM)",
+   "c": "Art arda süpürme (hazır tarama)",
+   "d": "Akışa uygulanır: 10 dk içinde ≥4 yukarı süpürme (her biri ≥4 kademe, ≥100 bin ₺), son süpürme ilkinin üstünde · alarm KAPALI kalır (Alarmlar sekmesinden tek dokunuşla açılır)",
+   "why": "5 hazır tarama içinde iki günün ortalamasında en yüksek isabet: 02.10'da ilk tetiklerin %27,6'i 60 dk içinde ≥+%3 (yalnız DİRENÇ KIRILDI: %11,0); tetik sonrası tavana dokunma %18,9 (taban %6,0); günün ciddi yükselenlerinin %40,8'i hareketin yarısı önündeyken yakalandı. 01.10: %16,5 · tavana dokunma %13,9.",
+   "tgt": {
+    "v": "olay",
+    "preset": "p_ard"
+   },
+   "kind": "kanit",
+   "bir": false,
+   "ev": {
+    "n": 127,
+    "tv": 15,
+    "prec": 27.6,
+    "c5": null,
+    "up": 48.8,
+    "med": 0.0,
+    "day": "20261002"
+   },
+   "ev2": {
+    "n": 79,
+    "tv": 8,
+    "prec": 16.5,
+    "c5": null,
+    "up": 32.9,
+    "med": -0.82,
+    "day": "20261001"
+   },
+   "note": "Kapanışa medyan ≈0 — sinyal gün içi ivmeyi yakalar, kapanışı değil; örneklem içi, 2 gün"
+  },
+  {
+   "id": "op_30",
+   "cat": "operasyon",
+   "f": "Operasyon Zaman Çizelgesi",
+   "c": "Hisse seçip evreye bakın",
+   "d": "Hisse bazında toplama → itme → dağıtım evresi; 'İTME' evresindeki hisseler en sıcak adaylardır (filtre/sıralama yok)",
+   "why": "Zaman çizelgesi hisse bazlıdır; listeyi Operasyon Skoru'ndan seçip burada evreyi doğrulayın.",
+   "tgt": {
+    "v": "op",
+    "id": "op_30"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "fm_ob",
+   "cat": "formasyon",
+   "f": "Order Block (Özet → FORMASYONLAR)",
+   "c": "1G + 4S taze talep bölgesi",
+   "d": "Hisse detayı → Özet → FORMASYONLAR → ORDER BLOCK kutusu: fiyatın üstünde durduğu, kırılmamış TALEP bölgesi (1G ve 4S)",
+   "why": "Kurumsal talep bölgesi üstünde tutunan fiyat, düşük riskli giriş verir.",
+   "tgt": {
+    "v": "stock",
+    "tab": "ozet"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "h_ozet",
+   "cat": "hisse",
+   "f": "Özet",
+   "c": "Hisse detayında bakılacaklar",
+   "d": "Özet sekmesi: Operasyon skoru, CİDDİ/TAVAN rozetleri, FORMASYONLAR (1G/4S) ve ORDER BLOCK birlikte yeşilse güçlü aday",
+   "why": "Tarayıcıdan gelen adayı tek ekranda doğrulayın.",
+   "tgt": {
+    "v": "stock",
+    "tab": "ozet"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "h_derinlik",
+   "cat": "hisse",
+   "f": "Derinlik (25 kademe)",
+   "c": "Hisse detayında bakılacaklar",
+   "d": "Tavan kademesindeki alış lotu büyüyor + satış kademeleri inceliyor + Derinlik Analizleri uyarıları (alış duvarı, satış erimesi)",
+   "why": "Kapsayan tarayıcı: Derinlik Baskısı (ALIŞ BASKIN).",
+   "tgt": {
+    "v": "stock",
+    "tab": "derinlik"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "h_islemler",
+   "cat": "hisse",
+   "f": "Gerçekleşen İşlemler",
+   "c": "Hisse detayında bakılacaklar",
+   "d": "Aktif alış oranı ≥%60 ve büyük lotlu süpürmeler art arda",
+   "why": "Kapsayan tarayıcı: Kademeli Süpürme / İşlem Analizi.",
+   "tgt": {
+    "v": "stock",
+    "tab": "islemler"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "h_akd",
+   "cat": "hisse",
+   "f": "AKD Dağılımı",
+   "c": "Hisse detayında bakılacaklar",
+   "d": "İLK 5 NET PGÇ kartı ≥%50 alan + tek kurum %30+ net alıcı",
+   "why": "Kapsayan tarayıcı: AKD Taraması (İLK N NET).",
+   "tgt": {
+    "v": "stock",
+    "tab": "akd"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "h_takas",
+   "cat": "hisse",
+   "f": "Takas Analizi",
+   "c": "Hisse detayında bakılacaklar",
+   "d": "Takasta son günlerde payını artıran kurum (Takas birikimi trendi)",
+   "why": "Kapsayan tarayıcı: Operasyon → Takas Birikimi Trendi.",
+   "tgt": {
+    "v": "stock",
+    "tab": "takas"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "h_kademe",
+   "cat": "hisse",
+   "f": "Hisse Kademe",
+   "c": "Hisse detayında bakılacaklar",
+   "d": "Y38 kademelerinde alış lotu > satış lotu, alış ortalaması yükseliyor",
+   "why": "Kapsayan tarayıcı: Kademe Analizi (NET ALICI).",
+   "tgt": {
+    "v": "stock",
+    "tab": "kademe"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "h_sinyal",
+   "cat": "hisse",
+   "f": "Hisse Teknik Sinyal",
+   "c": "Hisse detayında bakılacaklar",
+   "d": "AL / GÜÇLÜ AL + 5/15/60 dk uyumu",
+   "why": "Kapsayan tarayıcı: Teknik Sinyaller (Skor ↓).",
+   "tgt": {
+    "v": "stock",
+    "tab": "sinyal"
+   },
+   "kind": "not",
+   "bir": false
+  },
+  {
+   "id": "h_ai",
+   "cat": "hisse",
+   "f": "AI Analiz",
+   "c": "Hisse detayında bakılacaklar",
+   "d": "Tarayıcı adayını AI yorumuyla çapraz kontrol edin",
+   "why": "Yorum amaçlıdır; sinyal değildir.",
+   "tgt": {
+    "v": "stock",
+    "tab": "ai"
+   },
+   "kind": "not",
+   "bir": false
+  }
+ ]
+}

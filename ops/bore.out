@@ -1,0 +1,20 @@
+2026-10-05T13:24:17.080730Z  INFO bore_cli::client: connected to server remote_port=13167
+2026-10-05T13:24:17.081790Z  INFO bore_cli::client: listening at bore.pub:13167
+2026-10-05T13:24:54.981231Z  INFO proxy{id=e9583f09-d774-474d-b11a-b6e9e7a2b4a7}: bore_cli::client: new connection
+2026-10-05T13:24:56.190518Z  INFO proxy{id=e9583f09-d774-474d-b11a-b6e9e7a2b4a7}: bore_cli::client: connection exited
+2026-10-05T13:24:56.270629Z  INFO proxy{id=51d28490-6194-4ae5-858e-f803544817a3}: bore_cli::client: new connection
+2026-10-05T13:25:02.802417Z  INFO proxy{id=51d28490-6194-4ae5-858e-f803544817a3}: bore_cli::client: connection exited
+2026-10-05T13:50:37.505524Z  INFO proxy{id=33da0761-7453-48ba-b51f-dea09bbc7c52}: bore_cli::client: new connection
+2026-10-05T13:50:37.990446Z  INFO proxy{id=33da0761-7453-48ba-b51f-dea09bbc7c52}: bore_cli::client: connection exited
+2026-10-05T13:55:06.046637Z  INFO proxy{id=0ef85346-2349-4fe9-af6e-acb780bb7cfb}: bore_cli::client: new connection
+2026-10-05T13:55:11.278156Z  INFO proxy{id=0ef85346-2349-4fe9-af6e-acb780bb7cfb}: bore_cli::client: connection exited
+2026-10-05T15:49:13.984613Z  INFO proxy{id=9751e328-8ae5-4532-82d1-97df7be121de}: bore_cli::client: new connection
+2026-10-05T15:49:14.057059Z  INFO proxy{id=7862fb65-4a90-4ead-81b7-70b369169546}: bore_cli::client: new connection
+2026-10-05T15:49:14.432234Z  INFO proxy{id=9751e328-8ae5-4532-82d1-97df7be121de}: bore_cli::client: connection exited
+2026-10-05T15:49:14.434583Z  INFO proxy{id=7862fb65-4a90-4ead-81b7-70b369169546}: bore_cli::client: connection exited
+2026-10-05T15:49:14.675249Z  INFO proxy{id=b14aeefb-c4db-40ed-aab7-e53532f22bd2}: bore_cli::client: new connection
+2026-10-05T15:49:14.866187Z  INFO proxy{id=b14aeefb-c4db-40ed-aab7-e53532f22bd2}: bore_cli::client: connection exited
+2026-10-05T15:49:15.107585Z  INFO proxy{id=eb1674d6-a35e-4001-aaa6-f5affb8ac2d7}: bore_cli::client: new connection
+2026-10-05T15:49:15.272341Z  INFO proxy{id=eb1674d6-a35e-4001-aaa6-f5affb8ac2d7}: bore_cli::client: connection exited
+2026-10-05T17:07:32.490095Z  INFO proxy{id=a7fd213c-d02d-4688-83b4-90ac8ecbee2e}: bore_cli::client: new connection
+2026-10-05T17:07:34.986234Z  INFO proxy{id=a7fd213c-d02d-4688-83b4-90ac8ecbee2e}: bore_cli::client: connection exited

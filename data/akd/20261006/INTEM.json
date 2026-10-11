@@ -1,0 +1,1 @@
+{"date": "20261006", "TUM": [{"broker": "Anadolu", "value": -2.0, "pct": 0.0, "cost": 200.2}, {"broker": "Vakif", "value": 2.0, "pct": 0.0, "cost": 200.2}], "TOPLAM": [{"broker": "Vakif", "value": 2.0, "pct": 50.0, "cost": 200.2}, {"broker": "Anadolu", "value": 2.0, "pct": 50.0, "cost": 200.2}], "range": "20261006 - 20261006", "ts": 1791269813.7835884, "empty": false}

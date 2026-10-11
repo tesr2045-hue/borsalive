@@ -1,0 +1,27 @@
+{
+  "tfs": [
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "60m",
+    "2h",
+    "4h",
+    "1d",
+    "1w"
+  ],
+  "react_pct": 0.8,
+  "react_bars": 12,
+  "exit_buf_pct": 0.2,
+  "min_ticks": 2,
+  "ortak_tol_pct": 0.3,
+  "ortak_tol_ticks": 2,
+  "ortak_min": 2,
+  "ortak_max_per_side": 3,
+  "conf_cok": 3,
+  "near_pct": 0.5,
+  "interval_live_sec": 300,
+  "interval_idle_sec": 1800,
+  "max_zones_per_side": 4,
+  "min_bars": 40
+}

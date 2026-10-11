@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050607" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>BIST Canlı v1.27.1</title>
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css?v=1.38.1" />
+  <!-- v1.37.0: grafik kütüphanesi yerelden (unpkg CDN telefonda/ağda engellenince grafik sonsuza dek "yükleniyor"da kalıyordu); yerel olmazsa CDN yedeği -->
+  <script src="/static/vendor/lightweight-charts-4.2.0.js?v=1.38.1" defer onerror="var s=document.createElement('script');s.src='https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';document.head.appendChild(s)"></script>
+</head>
+<body>
+  <div class="shell" id="shell">
+    <!-- Top bar -->
+    <header class="topbar">
+      <button type="button" class="tb-back" id="btn-geri" aria-label="Geri"><span class="ico">&#8592;</span> Geri</button>
+      <div class="tb-center">
+        <span class="live-pill" id="live-pill" title="İdealData bağlantısı — dokun: İdealData Hesabı"><span class="dot"></span><span id="live-text">BAĞLANIYOR</span></span>
+        <span class="tb-clock" id="tb-clock">--:--:--</span>
+        <button type="button" class="tb-refresh" id="btn-refresh" aria-label="Yenile" title="Yenile — ekranın verisini yeniden çek (iki kez dokun: tam yenileme)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4.5v4.5h-4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div class="tb-right">
+        <button type="button" class="tb-icon tb-bell" id="btn-bell" aria-label="Bildirimler">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.6 2H4.4zM10 20.5a2.2 2.2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>
+          <span class="bell-n" id="bell-n" hidden>0</span>
+        </button>
+        <button type="button" class="tb-icon" id="btn-chevron" aria-label="Favoriler">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="tb-icon" id="btn-menu" aria-label="Menü">
+          <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="5" r="1.9" fill="currentColor"/><circle cx="12" cy="12" r="1.9" fill="currentColor"/><circle cx="12" cy="19" r="1.9" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="view" data-view="stock" id="view-stock">
+    <!-- Stock header card -->
+    <section class="card stock-card" id="stock-card">
+      <div class="sc-row1">
+        <button type="button" class="sc-back" id="btn-back2" aria-label="Hisse değiştir">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="sc-logo" id="sc-logo"><span id="sc-logo-txt">--</span></div>
+        <button type="button" class="sc-title" id="btn-symbol" aria-label="Hisse ara">
+          <span class="sc-sym" id="sc-sym">—</span>
+          <span class="sc-name" id="sc-name">Yükleniyor…</span>
+        </button>
+        <div class="sc-icons">
+          <button type="button" class="sc-ic" id="btn-alarm" aria-label="Alarm" title="Fiyat alarmı">
+            <svg viewBox="0 0 24 24" width="19" height="19"><path d="M6 17h12l-1.5-2V11a4.5 4.5 0 0 0-9 0v4L6 17z M10 20a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"/></svg>
+            <span class="ic-badge" id="alarm-count" hidden>0</span>
+          </button>
+          <button type="button" class="sc-ic" id="btn-note" aria-label="Not" title="Not">
+            <svg viewBox="0 0 24 24" width="19" height="19"><path d="M4 20h4l10-10-4-4L4 16v4z M13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"/></svg>
+          </button>
+          <button type="button" class="sc-ic" id="btn-share" aria-label="Paylaş" title="Paylaş">
+            <svg viewBox="0 0 24 24" width="19" height="19"><circle cx="18" cy="5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="6" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="18" cy="19" r="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M8.3 10.8l7.4-4.3M8.3 13.2l7.4 4.3" stroke="currentColor" stroke-width="1.9"/></svg>
+          </button>
+          <button type="button" class="sc-ic star" id="btn-fav" aria-label="Favori" title="Favori">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="sc-row2">
+        <div class="sc-price-wrap">
+          <span class="sc-price" id="sc-price">—</span>
+          <span class="chg-pill flat" id="sc-chg"><span class="caret">^</span> <span id="sc-chg-txt">—</span></span>
+        </div>
+        <div class="sc-meta">
+          <span id="sc-turnover">— Mn</span><span class="sep">•</span><span id="sc-time">--:--:--</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <nav class="tabs" id="tabs" role="tablist">
+      <button type="button" class="tab" data-tab="ozet" role="tab">ÖZET</button>
+      <button type="button" class="tab active" data-tab="derinlik" role="tab">DERİNLİK</button>
+      <button type="button" class="tab" data-tab="islemler" role="tab">İŞLEMLER</button>
+      <button type="button" class="tab" data-tab="akd" role="tab">AKD</button>
+      <button type="button" class="tab" data-tab="kademe" role="tab">KADEME</button>
+      <button type="button" class="tab" data-tab="takas" role="tab">TAKAS</button>
+      <button type="button" class="tab" data-tab="sinyal" role="tab">SİNYALLER</button>
+      <button type="button" class="tab" data-tab="ai" role="tab">AI</button>
+      <button type="button" class="tab op-tabbtn" data-tab="operasyon" role="tab">OPERASYON</button>
+    </nav>
+
+    <main class="panes" id="panes">
+      <!-- ÖZET -->
+      <section class="pane" data-pane="ozet" hidden>
+        <div id="ozp-top"></div>
+        <div class="card">
+          <div class="tf-bar" id="tf-bar">
+            <button type="button" data-tf="1m">1dk</button>
+            <button type="button" data-tf="5m" class="active">5dk</button>
+            <button type="button" data-tf="15m">15dk</button>
+            <button type="button" data-tf="1h">1sa</button>
+            <button type="button" data-tf="4h">4sa</button>
+            <button type="button" data-tf="1d">1G</button>
+            <button type="button" data-tf="1w">1H</button>
+          </div>
+          <div class="chart-box" id="chart-box"><div class="chart-msg" id="chart-msg">Grafik yükleniyor…</div></div>
+          <div class="src-note" id="chart-src">Kaynak: İş Yatırım</div>
+        </div>
+        <div id="fmz"></div>
+        <div class="card">
+          <div class="card-h"><span>ÖNEMLİ VERİLER</span><span class="muted sm" id="ozet-src">İdealData canlı</span></div>
+          <div class="kv-grid" id="ozet-grid"></div>
+        </div>
+        <div id="ozp"></div>
+        <div id="ozp-flow"></div>
+        <div class="card" id="ozet-ix-card">
+          <div class="card-h"><span>ENDEKSLERDEKİ ETKİSİ</span><button type="button" class="link-btn" id="ozet-ix-all">Tümü ›</button></div>
+          <div id="ozet-ix"><div class="empty">Yükleniyor…</div></div>
+        </div>
+      </section>
+
+      <!-- DERİNLİK -->
+      <section class="pane" data-pane="derinlik">
+        <div id="dr-top" class="dr-wrap"></div>
+        <div class="card limits-card">
+          <div class="lim-grid" id="lim-grid">
+            <div class="lim"><span class="lk">TAVAN</span><span class="lv pos" id="lim-tavan">—</span></div>
+            <div class="lim"><span class="lk">TABAN</span><span class="lv neg" id="lim-taban">—</span></div>
+            <div class="lim"><span class="lk">YÜKSEK</span><span class="lv" id="lim-yuksek">—</span></div>
+            <div class="lim"><span class="lk">DÜŞÜK</span><span class="lv" id="lim-dusuk">—</span></div>
+            <div class="lim"><span class="lk">AOF</span><span class="lv" id="lim-aof">—</span></div>
+            <div class="lim" title=""><span class="lk">DEVRE K.</span><span class="lv warn" id="lim-dk">—</span></div>
+          </div>
+        </div>
+        <div class="card depth-card">
+          <div class="depth-head">
+            <div class="press-wrap">
+              <span class="press-lbl pos" id="press-buy">Alış %—</span>
+              <div class="press-bar"><span id="press-fill" style="width:50%"></span></div>
+              <span class="press-lbl neg" id="press-sell">%— Satış</span>
+            </div>
+            <div class="sel-wrap">
+              <select id="depth-levels" class="pill-select" aria-label="Kademe sayısı">
+                <option value="5">5 KADEME</option>
+                <option value="10">10 KADEME</option>
+                <option value="25" selected>25 KADEME</option>
+              </select>
+            </div>
+          </div>
+          <div class="press2" id="press2">
+            <div class="p2-row"><span class="p2-k">25 KADEME</span><div class="press-bar thin"><span id="p25-fill" style="width:50%"></span></div><span class="p2-v"><b class="pos" id="p25-b">%—</b> / <b class="neg" id="p25-s">%—</b></span></div>
+            <div class="p2-row"><span class="p2-k">TÜM KADEME</span><div class="press-bar thin"><span id="pall-fill" style="width:50%"></span></div><span class="p2-v"><b class="pos" id="pall-b">%—</b> / <b class="neg" id="pall-s">%—</b></span></div>
+            <div class="p2-note" id="p2-note">Tüm kademe: İdealData'nın yayınladığı tüm defter toplam lotları (ayrıntı 25 kademe).</div>
+          </div>
+          <table class="depth-table" id="depth-table">
+            <thead><tr><th>EMİR</th><th>LOT</th><th>ALIŞ</th><th>SATIŞ</th><th>LOT</th><th>EMİR</th></tr></thead>
+            <tbody id="depth-body"><tr><td colspan="6" class="empty">Derinlik yükleniyor…</td></tr></tbody>
+            <tfoot id="depth-foot"></tfoot>
+          </table>
+          <div class="mk-leg" id="mk-leg"></div>
+        </div>
+        <div id="dr-a" class="dr-wrap"></div>
+        <div id="dr-g" class="dr-wrap"></div>
+        <div id="fl-wrap" class="dr-wrap"></div>
+        <div class="dr-off" id="dr-off" hidden>Derinlik analizleri kapalı · <button type="button" class="btn-ghost sm" data-drset="1">⚙ Derinlik Analizleri ayarları</button></div>
+        <div class="card trades-card">
+          <div class="tr-head">
+            <label class="switch-row"><input type="checkbox" id="whale-toggle" /><span class="switch"></span><span>Balina İşlemleri</span></label>
+            <label class="esik">Eşik
+              <select id="whale-th" class="pill-select sm">
+                <option value="100000">100 bin ₺</option>
+                <option value="250000">250 bin ₺</option>
+                <option value="500000">500 bin ₺</option>
+                <option value="1000000" selected>1 Mn ₺</option>
+                <option value="2500000">2,5 Mn ₺</option>
+                <option value="5000000">5 Mn ₺</option>
+                <option value="10000000">10 Mn ₺</option>
+              </select>
+            </label>
+          </div>
+          <div class="ratio-wrap">
+            <div class="ratio-bar"><span id="tape-fill" style="width:50%"></span></div>
+            <div class="ratio-lbls"><span class="pos" id="tape-buy">Alım: —</span><span class="neg" id="tape-sell">Satım: —</span></div>
+          </div>
+          <table class="tape-table">
+            <thead><tr><th>SAAT</th><th>FİYAT</th><th>LOT</th><th>ALICI</th><th>SATICI</th></tr></thead>
+            <tbody id="tape-body"><tr><td colspan="5" class="empty">İşlemler yükleniyor…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- İŞLEMLER -->
+      <section class="pane" data-pane="islemler" hidden>
+        <div class="card isl-filters">
+          <div class="isl-row1">
+            <select id="isl-broker" class="pill-select isl-broker" aria-label="Kurum seç"><option value="">KURUM SEÇ</option></select>
+            <div class="seg isl-side" id="isl-side">
+              <button type="button" data-side="" class="active">TÜMÜ</button>
+              <button type="button" data-side="buy">ALIŞ</button>
+              <button type="button" data-side="sell">SATIŞ</button>
+            </div>
+            <select id="isl-time" class="pill-select" aria-label="Zaman aralığı">
+              <option value="0">TÜM GÜN</option><option value="5">SON 5 DK</option><option value="15">SON 15 DK</option>
+              <option value="30">SON 30 DK</option><option value="60">SON 60 DK</option>
+            </select>
+          </div>
+          <div class="isl-chiprow"><span class="isl-lbl">₺ TUTAR</span>
+            <div class="seg chips-seg" id="isl-tl">
+              <button type="button" data-v="0" class="active">TÜMÜ</button><button type="button" data-v="1000000">1 MN</button>
+              <button type="button" data-v="2000000">2 MN</button><button type="button" data-v="5000000">5 MN</button>
+              <button type="button" data-v="10000000">10 MN</button>
+            </div>
+          </div>
+          <div class="isl-chiprow"><span class="isl-lbl">LOT</span>
+            <div class="seg chips-seg" id="isl-lot">
+              <button type="button" data-v="" class="active">TÜMÜ</button><button type="button" data-v="eq:1">1</button>
+              <button type="button" data-v="eq:2">2</button><button type="button" data-v="eq:5">5</button>
+              <select id="isl-lot-other" class="seg-select" aria-label="Diğer lot">
+                <option value="">DİĞER</option><option value="eq:10">= 10</option><option value="eq:100">= 100</option>
+                <option value="ge:1000">≥ 1.000</option><option value="ge:10000">≥ 10.000</option><option value="ge:100000">≥ 100.000</option>
+                <option value="custom">Özel…</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="isl-sortrow">
+          <div class="isl-meta" id="isl-meta">—</div>
+          <div class="seg" id="isl-sort">
+            <button type="button" data-sort="time" class="active">ZAMAN</button>
+            <button type="button" data-sort="lot">LOT</button>
+            <button type="button" data-sort="tl">HACİM</button>
+          </div>
+          <button type="button" class="round-btn" id="isl-refresh" aria-label="Yenile">&#8635;</button>
+        </div>
+        <div class="card isl-card">
+          <div class="isl-sums" id="isl-sums"></div>
+          <button type="button" class="new-pill" id="isl-new" hidden>↑ 0 yeni işlem</button>
+          <table class="tape-table isl-table">
+            <thead><tr><th>SAAT</th><th>FİYAT</th><th>LOT</th><th>ALICI</th><th>SATICI</th></tr></thead>
+            <tbody id="isl-body"><tr><td colspan="5" class="empty">İşlemler yükleniyor…</td></tr></tbody>
+          </table>
+          <div class="isl-sentinel" id="isl-sentinel"></div>
+          <button type="button" class="more-btn" id="isl-more" hidden>Daha fazla yükle</button>
+          <div class="src-note" id="isl-note">Kaynak: İdealData canlı işlem akışı (sunucu kaydı)</div>
+        </div>
+      </section>
+
+      <!-- AKD -->
+      <section class="pane" data-pane="akd" hidden>
+        <div class="card">
+          <div class="row-between">
+            <button type="button" class="btn-refresh" id="akd-refresh"><span class="ri">&#8635;</span> YENİLE</button>
+            <span class="day-label" id="akd-label">BUGÜN</span>
+          </div>
+          <div class="period-bar" id="akd-periods">
+            <div class="pb-item pb-daily active" data-period="daily">
+              <select id="akd-daily-sel" aria-label="Günlük">
+                <option value="daily">GÜNLÜK</option>
+              </select>
+            </div>
+            <button type="button" class="pb-item" data-period="weekly">HAFTALIK</button>
+            <button type="button" class="pb-item" data-period="monthly">AYLIK</button>
+            <button type="button" class="pb-item" data-period="3m">3 AYLIK</button>
+            <label class="pb-item pb-date" data-period="custom">TARİH<input type="date" id="akd-date" /></label>
+          </div>
+        </div>
+        <div class="card top-net-card">
+          <div class="row-between">
+            <span class="card-title" id="topnet-title">İLK 3 NET PGÇ</span>
+            <div class="seg sm" id="topn-seg">
+              <button type="button" data-n="3" class="active">İLK 3</button>
+              <button type="button" data-n="5">İLK 5</button>
+              <button type="button" data-n="10">İLK 10</button>
+              <button type="button" data-n="0" class="gizle">GİZLE</button>
+            </div>
+          </div>
+          <div class="topnet-grid" id="topnet-grid">
+            <div class="tn"><span class="tk">ALAN</span><span class="tv pos" id="tn-alan">—</span></div>
+            <div class="tn"><span class="tk">SATAN</span><span class="tv neg" id="tn-satan">—</span></div>
+            <div class="tn"><span class="tk" id="tn-net-k">NET</span><span class="tv" id="tn-net">—</span><span class="tn-pc muted" id="tn-pct" title="|ALAN − SATAN| ÷ max(ALAN, SATAN) × 100">—</span></div>
+          </div>
+        </div>
+        <div class="card akd-main">
+          <div class="seg full" id="akd-seg">
+            <button type="button" data-view="both" class="active">ALICILAR &amp; SATICILAR</button>
+            <button type="button" data-view="total">TOPLAM</button>
+          </div>
+          <div class="sort-row">
+            <span class="muted sm">SIRALA</span>
+            <button type="button" class="sort-btn" data-sort="tot" hidden>Toplam Lot <span class="arr"></span></button>
+            <button type="button" class="sort-btn active" data-sort="lot">Net Lot <span class="arr">↓</span></button>
+            <button type="button" class="sort-btn" data-sort="cost">Maliyet <span class="arr"></span></button>
+          </div>
+          <div class="akd-dual" id="akd-dual">
+            <div class="akd-col buy">
+              <div class="akd-col-h pos">ALICILAR <span class="muted sm" id="akd-cnt-buy"></span></div>
+              <table class="akd-table">
+                <thead><tr><th class="c-no">#</th><th class="c-kurum" colspan="2">KURUM ADI</th><th class="c-num">LOT</th><th class="c-num">MALİYET</th><th class="c-num">DAĞILIM</th></tr></thead>
+                <tbody id="akd-body-buy"><tr><td colspan="6" class="empty">AKD yükleniyor…</td></tr></tbody>
+              </table>
+              <button type="button" class="more-btn" id="akd-more-buy" hidden>Diğerlerini Göster (+0)</button>
+            </div>
+            <div class="akd-col sell">
+              <div class="akd-col-h neg">SATICILAR <span class="muted sm" id="akd-cnt-sell"></span></div>
+              <table class="akd-table">
+                <thead><tr><th class="c-no">#</th><th class="c-kurum" colspan="2">KURUM ADI</th><th class="c-num">LOT</th><th class="c-num">MALİYET</th><th class="c-num">DAĞILIM</th></tr></thead>
+                <tbody id="akd-body-sell"><tr><td colspan="6" class="empty">AKD yükleniyor…</td></tr></tbody>
+              </table>
+              <button type="button" class="more-btn" id="akd-more-sell" hidden>Diğerlerini Göster (+0)</button>
+            </div>
+          </div>
+          <div class="akd-total" id="akd-total" hidden>
+            <div class="akd-tot-scroll">
+            <table class="akd-table akd-tot-table">
+              <thead><tr><th class="c-no">#</th><th class="c-kurum">KURUM</th><th class="c-num c-tot">TOPLAM LOT</th><th class="c-num">ALIŞ</th><th class="c-num">SATIŞ</th><th class="c-num">NET</th><th class="c-num">MALİYET</th><th class="c-num">PAY</th><th class="c-num">K/Z ₺</th><th class="c-num">K/Z %</th></tr></thead>
+              <tbody id="akd-body"><tr><td colspan="10" class="empty">AKD yükleniyor…</td></tr></tbody>
+              <tfoot id="akd-foot"></tfoot>
+            </table>
+            </div>
+            <button type="button" class="more-btn" id="akd-more" hidden>Diğerlerini Göster (+0)</button>
+          </div>
+          <div class="src-note" id="akd-note">Kaynak: İdealData AKD</div>
+          <div id="akp"></div>
+        </div>
+      </section>
+
+      <!-- KADEME -->
+      <section class="pane" data-pane="kademe" hidden>
+        <div class="card">
+          <div class="row-between">
+            <button type="button" class="btn-refresh" id="kad-refresh"><span class="ri">&#8635;</span> YENİLE</button>
+            <span class="day-label" id="kad-label">BUGÜN</span>
+          </div>
+          <div class="kad-sum" id="kad-sum"></div>
+        </div>
+        <div class="card">
+          <table class="kad-table">
+            <thead><tr><th class="l">FİYAT</th><th>LOT</th><th class="c">A/S DAĞILIM</th><th>A %</th><th>S %</th></tr></thead>
+            <tbody id="kad-body"><tr><td colspan="5" class="empty">Kademe analizi yükleniyor…</td></tr></tbody>
+            <tfoot id="kad-foot"></tfoot>
+          </table>
+          <div class="src-note" id="kad-note">Kaynak: İdealData kademe analizi (gerçek alış/satış)</div>
+        </div>
+      </section>
+
+      <!-- TAKAS -->
+      <section class="pane" data-pane="takas" hidden>
+        <div class="card">
+          <div class="row-between">
+            <button type="button" class="btn-refresh" id="tks-refresh"><span class="ri">&#8635;</span> YENİLE</button>
+            <span class="day-label" id="tks-label">—</span>
+          </div>
+          <div class="takas-sum" id="tks-sum"></div>
+          <div class="seg full" id="tks-per" style="margin-top:10px">
+            <button type="button" data-per="d1">GÜNLÜK</button>
+            <button type="button" data-per="w1" class="active">HAFTALIK</button>
+            <button type="button" data-per="m1">AYLIK</button>
+          </div>
+          <div class="seg full" id="tks-seg" style="margin-top:8px">
+            <button type="button" data-view="both" class="active">ALANLAR &amp; SATANLAR</button>
+            <button type="button" data-view="total">TOPLAM</button>
+          </div>
+        </div>
+        <div id="tks-dual" class="tk-dual">
+          <div class="card"><div class="tk-h al"><span>ALANLAR · takası artan</span><span id="tks-al-sum">—</span></div>
+            <table class="akd-table takas-table"><thead><tr><th class="c-no">#</th><th class="c-kurum" colspan="2">KURUM</th><th class="c-num">ALDIĞI LOT</th><th class="c-num">PAY DEĞ.</th><th class="c-num">MEVCUT LOT</th></tr></thead>
+            <tbody id="tks-body-al"><tr><td colspan="6" class="empty">Yükleniyor…</td></tr></tbody></table>
+            <button type="button" class="more-btn" id="tks-more-al" hidden>Diğerlerini Göster</button></div>
+          <div class="card"><div class="tk-h sat"><span>SATANLAR · takası azalan</span><span id="tks-sat-sum">—</span></div>
+            <table class="akd-table takas-table"><thead><tr><th class="c-no">#</th><th class="c-kurum" colspan="2">KURUM</th><th class="c-num">SATTIĞI LOT</th><th class="c-num">PAY DEĞ.</th><th class="c-num">MEVCUT LOT</th></tr></thead>
+            <tbody id="tks-body-sat"><tr><td colspan="6" class="empty">Yükleniyor…</td></tr></tbody></table>
+            <button type="button" class="more-btn" id="tks-more-sat" hidden>Diğerlerini Göster</button></div>
+        </div>
+        <div class="card" id="tks-total" hidden>
+          <table class="akd-table takas-table">
+            <thead><tr><th class="c-no">#</th><th class="c-kurum" colspan="2">KURUM ADI</th><th class="c-num">LOT</th><th class="c-num">PAY %</th><th class="c-num">DEĞİŞİM</th></tr></thead>
+            <tbody id="tks-body"><tr><td colspan="6" class="empty">Takas yükleniyor…</td></tr></tbody>
+          </table>
+          <button type="button" class="more-btn" id="tks-more" hidden>Diğerlerini Göster (+0)</button>
+        </div>
+        <div class="src-note" id="tks-note">Kaynak: İdealData MKK takas</div>
+      </section>
+
+      <!-- SİNYALLER -->
+      <section class="pane" data-pane="sinyal" hidden>
+        <div class="card" id="sig-card"><div class="empty">Sinyal yükleniyor…</div></div>
+        <div class="card" id="plan-card"><div class="empty">İşlem planı yükleniyor…</div></div>
+        <div class="disclaimer">Otomatik model çıktısıdır · yatırım tavsiyesi değildir.</div>
+      </section>
+
+      <!-- AI -->
+      <!-- v1.21.0 OPERASYON (hisse bazında tüm operasyon sinyalleri) -->
+      <section class="pane" data-pane="operasyon" hidden>
+        <div id="opx"><div class="card"><div class="empty">Operasyon sinyalleri yükleniyor…</div></div></div>
+      </section>
+
+      <section class="pane" data-pane="ai" hidden>
+        <div class="card" id="ai-card"><div class="empty">Yorum hazırlanıyor…</div></div>
+        <div class="disclaimer">Kural tabanlı otomatik yorum (yapay zekâ modeli değildir) · yatırım tavsiyesi değildir.</div>
+      </section>
+    </main>
+    </div><!-- /view-stock -->
+
+    <!-- Yükselenler & Düşenler / Hacimliler -->
+    <div class="view" data-view="movers" id="view-movers" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic green"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 17l6-6 4 4 7-7M14 8h6v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title" id="mv-title">Yükselenler &amp; Düşenler</div><div class="sh-sub" id="mv-sub">Anlık fiyat değişim sıralaması</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="mv-btns" id="mv-btns">
+        <button type="button" data-mode="change" class="active">Değişime göre sırala</button>
+        <button type="button" data-mode="volume">Yüksek Hacimliler</button>
+      </div>
+      <div class="card breadth" id="mv-breadth"><span class="pos">▲ — Pozitif</span><span class="neg">▼ — Negatif</span><span class="neu">● — Nötr</span></div>
+      <div class="mv-cols" id="mv-cols">
+        <div class="mv-col"><div class="mv-col-h pos">⌃ YÜKSELENLER</div><div class="mv-list" id="mv-up"></div></div>
+        <div class="mv-col"><div class="mv-col-h neg">⌄ DÜŞENLER</div><div class="mv-list" id="mv-down"></div></div>
+      </div>
+      <div class="mv-vol" id="mv-vol" hidden><div class="mv-list" id="mv-vlist"></div></div>
+      <button type="button" class="more-btn" id="mv-more">Tümünü göster</button>
+      <div class="src-note center" id="mv-note">Kaynak: İdealData canlı · tüm BIST payları</div>
+    </div>
+
+    <!-- Canlı Veri Akışı -->
+    <div class="view" data-view="akis" id="view-akis" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic green"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Canlı Veri Akışı</div><div class="sh-sub">Tavan/taban, devre kesici, hacim, rekor ve kademe olayları · tam cümleyle</div></div>
+      </section>
+      <input type="search" class="ak-search" id="ak-search" placeholder="Hisse kodu veya olay ara..." autocomplete="off" spellcheck="false" />
+      <div class="ak-chips" id="ak-chips">
+        <button type="button" data-k="all" class="active">TÜMÜ <b>0</b></button>
+        <button type="button" data-k="fav">FAVORİLERİM <b>0</b></button>
+        <button type="button" data-k="devre">DEVRE <b>0</b></button>
+        <button type="button" data-k="tavantaban">TAVAN/TABAN <b>0</b></button>
+        <button type="button" data-k="hacim">HACİM <b>0</b></button>
+        <button type="button" data-k="52h">52H <b>0</b></button>
+        <button type="button" data-k="kapanis">KAPANIŞ <b>0</b></button>
+        <button type="button" data-k="tur">TUR <b>0</b></button>
+        <button type="button" data-k="kademe">KADEME <b>0</b></button>
+        <button type="button" data-k="diger">DİĞER <b>0</b></button>
+      </div>
+      <div class="ak-date" id="ak-date">—</div>
+      <div class="ak-list" id="ak-list"><div class="empty">Olaylar yükleniyor…</div></div>
+      <div class="src-note center" id="ak-note">Sunucu tarafı olay dedektörü · İdealData canlı fiyat akışı</div>
+    </div>
+
+    <!-- Derinlik Baskısı -->
+    <div class="view" data-view="baski" id="view-baski" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Derinlik Baskısı</div><div class="sh-sub">Lot bazlı alış baskısı · 25 kademe ve tüm defter</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="bk-tools">
+        <input type="search" class="ak-search" id="bk-search" placeholder="Hisse ara..." autocomplete="off" spellcheck="false" />
+        <div class="seg sm" id="bk-filter"><button type="button" data-f="all" class="active">TÜMÜ</button><button type="button" data-f="buy">ALIŞ BASKIN</button><button type="button" data-f="sell">SATIŞ BASKIN</button></div>
+      </div>
+      <div class="card tbl-card">
+        <div class="tbl-scroll">
+          <table class="grid-table" id="bk-table">
+            <thead><tr>
+              <th data-k="s" class="l sticky">HİSSE</th><th data-k="p">FİYAT</th><th data-k="c">%</th>
+              <th data-k="b25">25K ALIŞ</th><th data-k="a25">25K SATIŞ</th><th data-k="p25" class="sorted">25K BASKI</th>
+              <th data-k="ball">TÜM ALIŞ</th><th data-k="aall">TÜM SATIŞ</th><th data-k="pall">TÜM BASKI</th>
+            </tr></thead>
+            <tbody id="bk-body"><tr><td colspan="9" class="empty">Yükleniyor…</td></tr></tbody>
+          </table>
+        </div>
+        <button type="button" class="more-btn" id="bk-more" hidden>Daha fazla göster</button>
+        <div class="src-note" id="bk-note">—</div>
+      </div>
+    </div>
+
+    <!-- Kurum Analizi -->
+    <div class="view" data-view="kurum" id="view-kurum" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Kurum Analizi</div><div class="sh-sub">Her kurumun her hissedeki alış/satış payı, maliyet ve K/Z</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="seg full" id="kr-mode">
+        <button type="button" data-mode="all" class="active">TÜM KURUMLAR</button>
+        <button type="button" data-mode="one">TEK KURUM</button>
+      </div>
+      <div class="kr-tools">
+        <select id="kr-broker" class="pill-select kr-broker" hidden><option value="">Kurum seçin…</option></select>
+        <input type="search" class="ak-search" id="kr-search" placeholder="Hisse veya kurum ara..." autocomplete="off" spellcheck="false" />
+        <div class="seg sm" id="kr-side"><button type="button" data-s="" class="active">TÜMÜ</button><button type="button" data-s="buy">NET ALAN</button><button type="button" data-s="sell">NET SATAN</button></div>
+      </div>
+      <div class="kr-akd" id="kr-akd"></div>
+      <div class="card kr-sum" id="kr-sum" hidden></div>
+      <div class="card tbl-card">
+        <div class="tbl-scroll">
+          <table class="grid-table" id="kr-table">
+            <thead><tr>
+              <th data-k="b" class="l sticky">KURUM</th><th data-k="s" class="l">HİSSE</th>
+              <th data-k="bl" class="sorted">ALIŞ LOT</th><th data-k="bp">ALIŞ %</th><th data-k="sl">SATIŞ LOT</th><th data-k="sp">SATIŞ %</th>
+              <th data-k="nl">NET LOT</th><th data-k="co">MALİYET</th><th data-k="p">SON</th><th data-k="kz">K/Z ₺</th><th data-k="kzp">K/Z %</th>
+            </tr></thead>
+            <tbody id="kr-body"><tr><td colspan="11" class="empty">Yükleniyor…</td></tr></tbody>
+            <tfoot id="kr-foot"></tfoot>
+          </table>
+        </div>
+        <button type="button" class="more-btn" id="kr-more" hidden>Daha fazla göster</button>
+        <div class="src-note" id="kr-note">—</div>
+      </div>
+    </div>
+
+    <!-- Hisselerin Endekse Etkisi (v1.19.0) -->
+    <div class="view" data-view="endeks" id="view-endeks" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 5-6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="7" r="1.4" fill="currentColor"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Hisselerin Endekse Etkisi</div><div class="sh-sub">Puan katkısı · tüm BIST endeksleri · canlı</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <button type="button" class="card ix-pick" id="ix-pick" aria-label="Endeks seç">
+        <div class="ix-pick-l"><div class="ix-code" id="ix-code">XU100</div><div class="ix-name" id="ix-name">BIST 100</div></div>
+        <div class="ix-pick-r"><div class="ix-lvl" id="ix-lvl">—</div><div class="ix-chg" id="ix-chg">—</div></div>
+        <span class="ix-caret">▾</span>
+      </button>
+      <div class="ix-quick" id="ix-quick"></div>
+      <div class="card ix-sum" id="ix-sum"><div class="empty">Yükleniyor…</div></div>
+      <div class="card ix-bars-card" id="ix-bars-card">
+        <div class="card-h"><span class="card-title">EN ÇOK ETKİLEYENLER</span><span class="muted" id="ix-bars-unit">puan</span></div>
+        <div class="ix-bars" id="ix-bars"></div>
+      </div>
+      <div class="bk-tools">
+        <input type="search" class="ak-search" id="ix-search" placeholder="Endeks içinde hisse ara..." autocomplete="off" spellcheck="false" />
+        <div class="seg sm" id="ix-filter"><button type="button" data-f="all" class="active">TÜMÜ</button><button type="button" data-f="up">ARTIRANLAR</button><button type="button" data-f="down">DÜŞÜRENLER</button></div>
+      </div>
+      <div class="card tbl-card">
+        <div class="tbl-scroll">
+          <table class="grid-table" id="ix-table">
+            <thead><tr>
+              <th data-k="s" class="l sticky">HİSSE</th><th data-k="w">AĞIRLIK</th><th data-k="p">FİYAT</th><th data-k="c">%</th>
+              <th data-k="pts" class="sorted">PUAN ETKİSİ</th><th data-k="ip">ENDEKS % ETKİ</th><th data-k="sh">HAREKET PAYI</th><th data-k="t">HACİM ₺</th>
+            </tr></thead>
+            <tbody id="ix-body"><tr><td colspan="8" class="empty">Yükleniyor…</td></tr></tbody>
+          </table>
+        </div>
+        <button type="button" class="more-btn" id="ix-more" hidden>Daha fazla göster</button>
+        <div class="src-note" id="ix-note">—</div>
+      </div>
+    </div>
+
+    <!-- ===================== v1.20.0 ===================== -->
+    <!-- Piyasa Radarı -->
+    <div class="view" data-view="radar" id="view-radar" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic green"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 12l6-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Piyasa Radarı</div><div class="sh-sub">Tüm BIST payları · canlı fiyat, hacim, tavan/taban</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="rd-tools">
+        <input type="search" class="ak-search" id="rd-search" placeholder="Hisse kodu veya şirket ara..." autocomplete="off" spellcheck="false" />
+        <button type="button" class="rd-sort-btn" id="rd-sort-btn">⇅ Sırala</button>
+      </div>
+      <div class="ak-chips rd-chips" id="rd-chips">
+        <button type="button" data-k="all" class="active">TÜMÜ <b>0</b></button>
+        <button type="button" data-k="up">YÜKSELENLER <b>0</b></button>
+        <button type="button" data-k="down">DÜŞENLER <b>0</b></button>
+        <button type="button" data-k="ceil">TAVANA YAKIN <b>0</b></button>
+        <button type="button" data-k="floor">TABANA YAKIN <b>0</b></button>
+      </div>
+      <div class="rd-sortlbl muted sm" id="rd-sortlbl">—</div>
+      <div class="card rd-list" id="rd-list"><div class="empty">Yükleniyor…</div></div>
+      <button type="button" class="more-btn" id="rd-more" hidden>Daha fazla göster</button>
+      <div class="src-note center" id="rd-note">—</div>
+    </div>
+
+    <!-- Tavan / Taban İzleme -->
+    <div class="view" data-view="tavan" id="view-tavan" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3l7 8h-4v4H9v-4H5z M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Tavan / Taban İzleme</div><div class="sh-sub">Yaklaşan · tavanda · eriyen · tabanda · dönen — anlık bildirim</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="ak-chips" id="tt-chips">
+        <button type="button" data-k="tavan" class="active">TAVANDA <b>0</b></button>
+        <button type="button" data-k="tavan_yakin">TAVANA YAKIN <b>0</b></button>
+        <button type="button" data-k="taban_yakin">TABANA YAKIN <b>0</b></button>
+        <button type="button" data-k="taban">TABANDA <b>0</b></button>
+      </div>
+      <div class="card tbl-card"><div class="tbl-scroll"><table class="grid-table" id="tt-table">
+        <thead><tr><th class="l sticky">HİSSE</th><th>SON</th><th>%</th><th>TAVAN</th><th>TAVANA</th><th>TABAN</th><th>TABANA</th><th>TAVAN ALIŞ LOT</th><th>TABAN SATIŞ LOT</th><th>HACİM ₺</th></tr></thead>
+        <tbody id="tt-body"><tr><td colspan="10" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+        <div class="src-note" id="tt-note">—</div></div>
+      <div class="card"><div class="card-h"><span class="card-title">BİLDİRİMLER</span><span class="muted" id="tt-evn">—</span></div><div class="al-feed" id="tt-feed"><div class="empty">Henüz olay yok</div></div></div>
+      <div class="card al-set" id="tt-set"></div>
+    </div>
+
+    <!-- Agresif İşlem -->
+    <div class="view" data-view="agresif" id="view-agresif" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Agresif İşlem</div><div class="sh-sub">Kademe süpürme dedektörü · satış/alış tarafı · canlı</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="card ag-sum" id="ag-sum"><div class="empty">Yükleniyor…</div></div>
+      <div class="card al-set" id="ag-set"></div>
+      <div class="card tbl-card"><div class="tbl-scroll"><table class="grid-table" id="ag-table">
+        <thead><tr><th class="l sticky">HİSSE</th><th class="l">SAAT</th><th>YÖN</th><th>KADEME</th><th>FİYAT</th><th>LOT</th><th>TUTAR ₺</th><th>DEFTER %</th><th>%</th><th class="l">KURUM</th></tr></thead>
+        <tbody id="ag-body"><tr><td colspan="10" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+        <div class="src-note" id="ag-note">—</div></div>
+    </div>
+
+    <!-- Toplu Para Giriş-Çıkışı -->
+    <div class="view" data-view="para" id="view-para" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic green"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 12h7M7 8l4 4-4 4M21 12h-7M17 8l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Toplu Para Giriş-Çıkışı</div><div class="sh-sub">Tüm paylar · piyasa ve sektör toplamları · aktif alım/satım</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="card pa-mkt" id="pa-mkt"><div class="empty">Yükleniyor…</div></div>
+      <div class="card"><div class="card-h"><span class="card-title">SEKTÖRLER</span><span class="muted">net para akışı</span></div><div id="pa-sec"></div></div>
+      <div class="bk-tools">
+        <input type="search" class="ak-search" id="pa-search" placeholder="Hisse veya sektör ara..." autocomplete="off" spellcheck="false" />
+        <div class="seg sm" id="pa-filter"><button type="button" data-f="all" class="active">TÜMÜ</button><button type="button" data-f="in">NET GİRİŞ</button><button type="button" data-f="out">NET ÇIKIŞ</button></div>
+      </div>
+      <div class="card tbl-card"><div class="tbl-scroll"><table class="grid-table" id="pa-table">
+        <thead><tr><th data-k="s" class="l sticky">HİSSE</th><th data-k="p">SON</th><th data-k="c">%</th><th data-k="in">GİRİŞ ₺</th><th data-k="out">ÇIKIŞ ₺</th><th data-k="net" class="sorted">NET ₺</th><th data-k="netp">NET %</th><th data-k="secn" class="l">SEKTÖR</th></tr></thead>
+        <tbody id="pa-body"><tr><td colspan="8" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+        <button type="button" class="more-btn" id="pa-more" hidden>Daha fazla göster</button>
+        <div class="src-note" id="pa-note">—</div></div>
+    </div>
+
+    <!-- Kurum Uyarıları + Gün Sonu Raporu -->
+    <div class="view" data-view="kurumuyari" id="view-kurumuyari" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3a6 6 0 0 1 6 6v4l2 3H4l2-3V9a6 6 0 0 1 6-6zM10 19a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Kurum Uyarıları</div><div class="sh-sub">Seçili kurumların yoğun agresif alım/satımları · gün sonu raporu</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="card al-set" id="ku-set"></div>
+      <div class="seg full" id="ku-tab"><button type="button" data-t="feed" class="active">CANLI UYARILAR</button><button type="button" data-t="rapor">GÜN SONU RAPORU</button></div>
+      <div class="card" id="ku-feed-card"><div class="card-h"><span class="card-title">UYARILAR</span><span class="muted" id="ku-evn">—</span></div><div class="al-feed" id="ku-feed"><div class="empty">Yükleniyor…</div></div></div>
+      <div id="ku-rapor" hidden></div>
+    </div>
+
+    <!-- v1.26.0 AKD TARAMASI — tüm hisselerin AKD'si -->
+    <div class="view" data-view="akdt" id="view-akdt" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 5h16M4 10h10M4 15h7M4 20h5M16.5 11a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7M19 17l2.5 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">AKD Taraması</div><div class="sh-sub" id="at-sub">Tüm hisselerin AKD'si · kurum filtreleri</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div id="at-info"></div>
+      <div class="card at-ctl" id="at-ctl"></div>
+      <div class="card tbl-card"><div class="tbl-scroll"><table class="grid-table at-table" id="at-table">
+        <thead id="at-head"></thead><tbody id="at-body"><tr><td colspan="16" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+        <button type="button" class="more-btn" id="at-more" hidden>Daha fazla göster</button>
+        <div class="src-note" id="at-note">—</div></div>
+      <div id="at-nt"></div>
+    </div>
+
+    <!-- v1.27.1 MUM FORMASYONLARI -->
+    <div class="view" data-view="fm_mum" id="view-fm_mum" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M7 3v3M7 15v6M5 6h4v9H5zM17 3v5M17 17v4M15 8h4v9h-4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Mum Formasyonları</div><div class="sh-sub">Tüm hisseler · 5dk–1H · son kapanan bar</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="card at-ctl" id="fmm-ctl"></div>
+      <div id="fmm-sum"></div>
+      <div id="fmm-list"><div class="empty">Yükleniyor…</div></div>
+      <button type="button" class="more-btn" id="fmm-more" hidden>Daha fazla göster</button>
+      <div class="card"><div class="src-note" id="fmm-note">—</div></div>
+      <div id="fmm-nt"></div>
+    </div>
+
+    <!-- v1.27.1 GRAFİK FORMASYONLARI -->
+    <div class="view" data-view="fm_grafik" id="view-fm_grafik" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 18l5-7 4 4 4-9 5 8M3 21h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Grafik Formasyonları</div><div class="sh-sub">OBO · ikili/üçlü · üçgen · takoz · bayrak · kanal — stop/hedef</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="card at-ctl" id="fmg-ctl"></div>
+      <div id="fmg-sum"></div>
+      <div id="fmg-list"><div class="empty">Yükleniyor…</div></div>
+      <button type="button" class="more-btn" id="fmg-more" hidden>Daha fazla göster</button>
+      <div class="card"><div class="src-note" id="fmg-note">—</div></div>
+      <div id="fmg-nt"></div>
+    </div>
+
+    <!-- v1.26.2 AKTİF İŞLEM TARAMASI (KURUM) -->
+    <div class="view" data-view="akk" id="view-akk" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M13 3L5 13h6l-1 8 8-10h-6l1-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Aktif İşlem Taraması (KURUM)</div><div class="sh-sub" id="akk-sub">Kurumların aktif alış %'si · tüm hisseler</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div id="akk-info"></div>
+      <div class="card at-ctl" id="akk-ctl"></div>
+      <div id="akk-sum"></div>
+      <div class="card tbl-card"><div class="tbl-scroll"><table class="grid-table at-table akk-table" id="akk-table">
+        <thead id="akk-head"></thead><tbody id="akk-body"><tr><td colspan="12" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+        <button type="button" class="more-btn" id="akk-more" hidden>Daha fazla göster</button>
+        <div class="src-note" id="akk-note">—</div></div>
+      <div id="akk-nt"></div>
+    </div>
+
+    <!-- Aktif/Pasif Kurum Paneli — Tahtacı Tespiti -->
+    <div class="view" data-view="tahtaci" id="view-tahtaci" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4.5 4.5M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Tahtacı Tespiti</div><div class="sh-sub">Aktif/Pasif kurum paneli · her hissede her kurum</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="seg full" id="th-view"><button type="button" data-v="score" class="active">SKORA GÖRE</button><button type="button" data-v="broker">KURUMA GÖRE</button><button type="button" data-v="stock">HİSSEYE GÖRE</button></div>
+      <div class="kr-tools">
+        <select id="th-broker" class="pill-select kr-broker" hidden><option value="">Kurum seçin…</option></select>
+        <input type="search" class="ak-search" id="th-stock" placeholder="Hisse kodu (örn. THYAO)" autocomplete="off" spellcheck="false" hidden />
+        <input type="search" class="ak-search" id="th-search" placeholder="Listede ara..." autocomplete="off" spellcheck="false" />
+        <label class="op-tg" title="Aynı kurumun iki tarafta olduğu işlemleri hariç tut"><input type="checkbox" id="th-nocross" /> Çapraz hariç</label>
+      </div>
+      <div class="kr-akd" id="th-akd"></div>
+      <div class="card tbl-card"><div class="tbl-scroll"><table class="grid-table" id="th-table">
+        <thead><tr><th data-k="s" class="l sticky">HİSSE</th><th data-k="b" class="l">KURUM</th><th data-k="score" class="sorted">TAHTACI SKORU</th><th data-k="share">HACİM PAYI</th><th data-k="bshare">ALIŞ %</th><th data-k="sshare">SATIŞ %</th>
+          <th data-k="aa">AKTİF ALIM</th><th data-k="pa">PASİF ALIM</th><th data-k="as">AKTİF SATIŞ</th><th data-k="ps">PASİF SATIŞ</th><th data-k="nl2">NET LOT</th><th data-k="aco">MALİYET</th><th data-k="bavg">ORT. ALIŞ</th><th data-k="two">İKİ YÖN %</th><th data-k="act">AKTİF %</th></tr></thead>
+        <tbody id="th-body"><tr><td colspan="12" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+        <button type="button" class="more-btn" id="th-more" hidden>Daha fazla göster</button>
+        <div class="src-note" id="th-note">—</div></div>
+    </div>
+
+    <!-- v1.21.0 OPERASYON TESPİTİ + piyasa geneli Kademe Analizi / Teknik Sinyaller (tek genel ekran) -->
+    <div class="view" data-view="op" id="view-op" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold" id="op-ic"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 7a5 5 0 1 0 0 10a5 5 0 1 0 0-10M12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></span>
+        <div class="sh-t"><div class="sh-title" id="op-title">Operasyon Tespiti</div><div class="sh-sub" id="op-sub">—</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="op-strip" id="op-strip"></div>
+      <div class="card op-info" id="op-info"><div class="empty">Yükleniyor…</div></div>
+      <div id="op-special"></div>
+      <div id="op-extra"></div>
+      <div class="kr-tools op-tools">
+        <input type="search" class="ak-search" id="op-q" placeholder="Hisse / kurum ara..." autocomplete="off" spellcheck="false" />
+        <div class="seg sm" id="op-filt" hidden></div>
+      </div>
+      <div class="card tbl-card"><div class="tbl-scroll"><table class="grid-table op-table" id="op-table">
+        <thead id="op-head"></thead><tbody id="op-body"><tr><td class="empty">Yükleniyor…</td></tr></tbody><tfoot id="op-foot"></tfoot></table></div>
+        <button type="button" class="more-btn" id="op-more" hidden>Daha fazla göster</button>
+        <div class="src-note" id="op-note">—</div></div>
+    </div>
+
+    <!-- Favoriler -->
+    <!-- v1.29.0 En İyi Koşullar -->
+    <div class="view" data-view="eik" id="view-eik" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M7 4h10v4a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8M10 17h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">En İyi Koşullar</div><div class="sh-sub" id="eik-sub">Her özelliğin tavan / ciddi yükseliş için en iyi ayarı · dokun → otomatik uygula</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="bk-tools"><input type="search" class="ak-search" id="eik-q" placeholder="Özellik ara (örn. POC, AKD, süpürme)..." autocomplete="off" spellcheck="false" /></div>
+      <div id="eik-body"><div class="card"><div class="empty">Yükleniyor…</div></div></div>
+    </div>
+
+    <!-- v1.30.0 Olay Listesi (ALARM) -->
+    <div class="view" data-view="olay" id="view-olay" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic red"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20a2 2 0 0 0 4 0M4 5l2 2M20 5l-2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Olay Listesi (ALARM)</div><div class="sh-sub" id="ol-sub">Tüm hisselerde POC Baskısı olayları · olay türüne alarm kur</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="km-rng ol-tabs" id="ol-tab"><button type="button" data-olt="akis" class="active">OLAY AKIŞI</button><button type="button" data-olt="alarm">ALARMLAR</button><button type="button" data-olt="hazir">HAZIR TARAMALAR</button></div>
+      <div id="ol-body"><div class="card"><div class="empty">Yükleniyor…</div></div></div>
+    </div>
+
+    <!-- v1.34.0 AL BUNU · TAVAN ADAYI -->
+    <div class="view" data-view="albunu" id="view-albunu" hidden>
+      <section class="card scr-head ab-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic ab-ic">✅</span>
+        <div class="sh-t"><div class="sh-title">AL BUNU · TAVAN ADAYI</div><div class="sh-sub" id="ab-sub">Kurum fiyatı ısrarla yukarı itiyor ve hâlâ itiyor — tek liste</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div id="ab-body"><div class="card"><div class="empty">Yükleniyor…</div></div></div>
+    </div>
+    <div class="sk-sheet" id="ab-sheet" hidden><div class="sk-sbg" data-abclose="1"></div><div class="sk-sbody" id="ab-sbody"></div></div>
+
+    <!-- v1.36.0 ORDER BLOCK TARAMASI -->
+    <div class="view" data-view="telegram" id="view-telegram" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic">✈️</span>
+        <div class="sh-t"><div class="sh-title">TELEGRAM BİLDİRİM AYARLARI</div><div class="sh-sub">Tüm bildirimler kendi Telegram kanalına · uygulama kapalıyken de</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div id="tg-body"><div class="card"><div class="empty">Yükleniyor…</div></div></div>
+    </div>
+    <div class="view" data-view="obt" id="view-obt" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic">🧱</span>
+        <div class="sh-t"><div class="sh-title">ORDER BLOCK TARAMASI</div><div class="sh-sub" id="obt-sub">Çok periyotlu destek/direnç bölgeleri · kesişim = ÇOK GÜÇLÜ</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div id="obt-body"><div class="card"><div class="empty">Yükleniyor…</div></div></div>
+    </div>
+    <div class="sk-sheet" id="obt-sheet" hidden><div class="sk-sbg" data-obtclose="1"></div><div class="sk-sbody" id="obt-sbody"></div></div>
+
+    <!-- v1.33.0 ALGO DESTEK / ALGO DİRENÇ -->
+    <div class="view" data-view="algo" id="view-algo" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic al-ic">▤</span>
+        <div class="sh-t"><div class="sh-title">ALGO DESTEK / ALGO DİRENÇ</div><div class="sh-sub" id="al-sub">Tüm hisselerin canlı derinliğinde tekrarlayan lot (algoritmik) duvarları</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="km-rng ol-tabs" id="al-tab"><button type="button" data-alt="b" class="active">ALGO DESTEK</button><button type="button" data-alt="a">ALGO DİRENÇ</button></div>
+      <div id="al-body"><div class="card"><div class="empty">Yükleniyor…</div></div></div>
+    </div>
+    <div class="sk-sheet" id="al-sheet" hidden><div class="sk-sbg" data-alclose="1"></div><div class="sk-sbody" id="al-sbody"></div></div>
+
+    <!-- v1.32.0 D-A-K SKORLARI -->
+    <div class="view" data-view="skor" id="view-skor" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic sk-ic">◎</span>
+        <div class="sh-t"><div class="sh-title">D-A-K SKORLARI</div><div class="sh-sub" id="sk-sub">Derinlik Skoru · AKD Skoru · Kademe Analizi Skoru · D-A-K Skoru — tüm hisseler, canlı</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div id="sk-body"><div class="card"><div class="empty">Yükleniyor…</div></div></div>
+    </div>
+    <div class="sk-sheet" id="sk-sheet" hidden><div class="sk-sbg" data-skclose="1"></div><div class="sk-sbody" id="sk-sbody"></div></div>
+
+    <!-- v1.31.0 TRENE ATLA -->
+    <div class="view" data-view="tren" id="view-tren" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic tr-ic">🚀</span>
+        <div class="sh-t"><div class="sh-title">TRENE ATLA</div><div class="sh-sub" id="tr-sub">Tek alarm · hisse şimdi sert yükselmeye başlıyor → piyasa emriyle atla</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div id="tr-body"><div class="card"><div class="empty">Yükleniyor…</div></div></div>
+    </div>
+
+    <div class="view" data-view="favs" id="view-favs" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">İzleme Listem</div><div class="sh-sub">Favoriler ve son bakılan hisseler</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="seg full" id="fv-seg"><button type="button" data-l="fav" class="active">FAVORİLER</button><button type="button" data-l="recent">SON BAKILAN</button></div>
+      <div class="card"><div class="mv-list" id="fv-list"></div></div>
+    </div>
+
+    <!-- ===================== v1.20.1 Bildirimler ===================== -->
+    <div class="view" data-view="bildirim" id="view-bildirim" hidden>
+      <section class="card scr-head">
+        <button type="button" class="sh-back" data-goback="1" aria-label="Geri"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="sh-ic gold"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.6 2H4.4zM10 20.5a2.2 2.2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+        <div class="sh-t"><div class="sh-title">Bildirimler</div><div class="sh-sub">Her tür için KAPALI · SADECE GÖRÜNTÜLE · BİLDİRİM</div></div>
+        <div class="sh-date" data-today="1">—</div>
+      </section>
+      <div class="seg full" id="nf-tab"><button type="button" data-t="gecmis" class="active">GEÇMİŞ <b id="nf-unread"></b></button><button type="button" data-t="ayar">AYARLAR</button><button type="button" data-t="alarm">ALARMLAR</button></div>
+      <div id="nf-gecmis">
+        <div class="ak-chips nf-chips" id="nf-chips"></div>
+        <div class="nf-tools"><span class="muted sm" id="nf-count">—</span><span><button type="button" class="btn-ghost sm" id="nf-read">Tümü okundu</button><button type="button" class="btn-ghost sm" id="nf-clear">Temizle</button></span></div>
+        <section class="card nf-list" id="nf-list"></section>
+      </div>
+      <div id="nf-ayar" hidden></div>
+      <div id="nf-alarm" hidden></div>
+    </div>
+
+    <footer class="foot" id="foot">v1.38.1 · İdealData canlı · İş Yatırım grafik</footer>
+  </div>
+
+  <!-- Bottom navigation -->
+  <nav class="bnav" id="bnav">
+    <button type="button" data-go="stock" class="active" aria-label="Ana sayfa"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>ANA SAYFA</span></button>
+    <button type="button" data-go="radar" aria-label="Piyasa Radarı"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 12l6-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"/></svg><span>RADAR</span></button>
+    <button type="button" data-go="tavan" aria-label="Tavan Taban İzleme"><svg viewBox="0 0 24 24"><path d="M12 3l7 8h-4v4H9v-4H5z M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg><span>TAVAN</span></button>
+    <button type="button" data-go="baski" aria-label="Derinlik Baskısı"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg><span>BASKI</span></button>
+    <button type="button" data-go="akis" aria-label="Akış"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>AKIŞ</span></button>
+    <button type="button" data-go="hacim" aria-label="Hacimliler"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span>HACİM</span></button>
+    <button type="button" data-go="kurum" aria-label="Kurum Analizi"><svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>KURUM</span></button>
+    <button type="button" data-go="endeks" aria-label="Hisselerin Endekse Etkisi"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ENDEKS</span></button>
+    <button type="button" data-go="movers" aria-label="Yükselenler ve Düşenler"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 7-7M14 8h6v6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>YÜKSELEN</span></button>
+    <button type="button" data-go="favs" aria-label="Favoriler"><svg viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3M4 7.5V17a2 2 0 0 0 2 2h14V8H6.5A2.5 2.5 0 0 1 4 7.5zM16 13.5h1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>LİSTEM</span></button>
+  </nav>
+
+  <!-- v1.20.1 KEŞFET menüsü -->
+  <div class="kesfet" id="kesfet" hidden>
+    <div class="kf-sheet">
+      <div class="kf-head">
+        <div class="kf-title">KEŞFET</div>
+        <button type="button" class="kf-edit" id="kf-edit">Düzenle</button>
+      </div>
+      <input type="search" class="ak-search kf-q" id="kf-q" placeholder="Menüde ara…" autocomplete="off" />
+      <div class="kf-pins" id="kf-pins" hidden></div>
+      <div id="kf-groups"></div>
+      <div class="kf-foot muted sm">İpucu: bir öğeye uzun basarak alt menüye ekleyin / çıkarın · Düzenle ile sıralayın</div>
+    </div>
+  </div>
+
+  <!-- Search sheet -->
+  <div class="sheet" id="search-sheet" hidden>
+    <div class="sheet-bg" data-close="1"></div>
+    <div class="sheet-body">
+      <div class="sheet-head">
+        <input type="search" id="search-input" placeholder="Hisse ara (örn. THYAO, KCAER)…" autocomplete="off" autocapitalize="characters" spellcheck="false" />
+        <button type="button" class="sheet-x" data-close="1" aria-label="Kapat">✕</button>
+      </div>
+      <div class="seg sm" id="search-seg">
+        <button type="button" data-list="all" class="active">TÜMÜ</button>
+        <button type="button" data-list="fav">FAVORİLER</button>
+        <button type="button" data-list="recent">SON BAKILAN</button>
+      </div>
+      <div class="search-meta muted sm" id="search-meta">—</div>
+      <ul class="search-list" id="search-list"></ul>
+    </div>
+  </div>
+
+  <!-- v1.20.0 Radar: Sırala + Rakipler -->
+  <div class="sheet" id="rd-sort-sheet" hidden>
+    <div class="sheet-bg" data-close="1"></div>
+    <div class="sheet-body rd-sheet">
+      <div class="sheet-head"><div class="sheet-title">Sırala</div><button type="button" class="sheet-x" data-close="1" aria-label="Kapat">✕</button></div>
+      <ul class="rd-sort-list" id="rd-sort-list">
+        <li data-sort="chg_desc">Değişim % — yüksekten düşüğe</li>
+        <li data-sort="chg_asc">Değişim % — düşükten yükseğe</li>
+        <li data-sort="vol_desc">İşlem hacmi (TL) — en yüksek</li>
+        <li data-sort="ceil">Tavana yakınlık</li>
+        <li data-sort="alpha">Alfabetik (A → Z)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sheet" id="rd-peer-sheet" hidden>
+    <div class="sheet-bg" data-close="1"></div>
+    <div class="sheet-body rd-sheet">
+      <div class="sheet-head"><div><div class="sheet-title">RAKİPLER</div><div class="muted sm" id="rp-sub">—</div></div><button type="button" class="sheet-x" data-close="1" aria-label="Kapat">✕</button></div>
+      <div class="seg full" id="rp-mode"><button type="button" data-m="t" class="active">HACİM</button><button type="button" data-m="c">DEĞİŞİM</button></div>
+      <div class="rp-list" id="rp-list"></div>
+    </div>
+  </div>
+
+  <!-- Endeks seçici (v1.19.0) -->
+  <div class="sheet" id="ix-sheet" hidden>
+    <div class="sheet-bg" data-close="1"></div>
+    <div class="sheet-body">
+      <div class="sheet-head">
+        <input type="search" id="ix-sheet-input" placeholder="Endeks ara (örn. XBANK, banka, katılım)…" autocomplete="off" spellcheck="false" />
+        <button type="button" class="sheet-x" data-close="1" aria-label="Kapat">✕</button>
+      </div>
+      <div class="seg sm ix-groups" id="ix-groups"></div>
+      <div class="search-meta muted sm" id="ix-sheet-meta">—</div>
+      <ul class="search-list" id="ix-list"></ul>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <div class="menu" id="menu" hidden>
+    <div class="menu-bg" data-close="1"></div>
+    <div class="menu-body">
+      <button type="button" data-act="search">🔍 Hisse ara</button>
+      <button type="button" data-act="go:movers">📈 Yükselenler &amp; Düşenler</button>
+      <button type="button" data-act="go:hacim">≡ Yüksek Hacimliler</button>
+      <button type="button" data-act="go:akis">⚡ Canlı Veri Akışı</button>
+      <button type="button" data-act="go:baski">◎ Derinlik Baskısı</button>
+      <button type="button" data-act="go:kurum">🏛 Kurum Analizi</button>
+      <button type="button" data-act="go:akdt">🔎 AKD Taraması</button>
+      <button type="button" data-act="go:akk">⚡ Aktif İşlem Taraması (Kurum)</button>
+      <button type="button" data-act="go:endeks">📊 Hisselerin Endekse Etkisi</button>
+      <button type="button" data-act="go:radar">📡 Piyasa Radarı</button>
+      <button type="button" data-act="go:tavan">🔺 Tavan / Taban İzleme</button>
+      <button type="button" data-act="go:agresif">⚡ Agresif İşlem</button>
+      <button type="button" data-act="go:para">💸 Toplu Para Giriş-Çıkışı</button>
+      <button type="button" data-act="go:kurumuyari">🔔 Kurum Uyarıları &amp; Gün Sonu Raporu</button>
+      <button type="button" data-act="go:tahtaci">🕵 Tahtacı Tespiti (Aktif/Pasif)</button>
+      <button type="button" data-act="kesfet">☰ KEŞFET menüsü</button>
+      <button type="button" data-act="nf:ayar">🔔 Bildirim Ayarları</button>
+      <button type="button" data-act="drset">📶 Derinlik Analizleri Ayarları</button>
+      <button type="button" data-act="nf:gecmis">🕘 Bildirim Geçmişi</button>
+      <button type="button" data-act="nf:alarm">⏰ Alarm Yönetimi</button>
+      <button type="button" data-act="fav">★ Favoriler</button>
+      <button type="button" data-act="refresh">↻ Yenile</button>
+      <button type="button" data-act="notify">🔔 Bildirim izni</button>
+      <button type="button" data-act="about">ℹ Bağlantı durumu</button>
+    </div>
+  </div>
+
+  <!-- Generic dialog -->
+  <div class="sheet" id="dlg" hidden>
+    <div class="sheet-bg" data-close="1"></div>
+    <div class="sheet-body dlg-body">
+      <div class="sheet-head"><strong id="dlg-title">—</strong><button type="button" class="sheet-x" data-close="1" aria-label="Kapat">✕</button></div>
+      <div id="dlg-content"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <div class="nb-stack" id="nb-stack" aria-live="polite"></div>
+  <script src="/static/app.js?v=1.38.1"></script>
+</body>
+</html>

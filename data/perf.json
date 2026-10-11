@@ -1,0 +1,13 @@
+{
+ "low_resource": "auto",
+ "interval_mul": 3.0,
+ "min_gap_sec": 20,
+ "startup_stagger_sec": 20,
+ "threadpool": 16,
+ "nice": 0,
+ "no_throttle": [
+  "tren",
+  "radar",
+  "dpage"
+ ]
+}
